@@ -16,8 +16,7 @@ int main()
     int old_head_position;
     list<int> tail_list;
     bool wall_shock = false;
-
-    char ch = 'W';
+    char key_pressed = 'W';
     char old_ch;
     system("cls");
     print(Map);
@@ -26,91 +25,69 @@ int main()
     {
 
         if (_kbhit())
-        {
-            ch = toupper(getch());
-        }
+            key_pressed = toupper(getch());
 
-        if (ch == 'A')
+        switch (key_pressed)
         {
+        case 'W':
             old_head_position = head_position;
-            head_position = draw_left(Map, head_position, map_height, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, ch);
+            head_position = draw_up(Map, head_position, map_width);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
 
             if (!wall_shock)
-            {
                 Tail_movenent(tail_list, old_head_position);
-            }
-
+        
             if (tail_list.size() > 0)
             {
                 draw_snake_tail(Map, tail_list);
                 Map.replace(tail_list.back(), 1, " ");
             }
-
-            print(Map);
-            Sleep(difficulty);
-        }
-        if (ch == 'D')
-        {
+            break;
+        case 'A':
             old_head_position = head_position;
-            head_position = draw_right(Map, head_position, map_height, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, ch);
+            head_position = draw_left(Map, head_position, map_width);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
 
             if (!wall_shock)
-            {
                 Tail_movenent(tail_list, old_head_position);
-            }
-
+            
             if (tail_list.size() > 0)
             {
                 draw_snake_tail(Map, tail_list);
                 Map.replace(tail_list.back(), 1, " ");
             }
-
-            print(Map);
-            Sleep(difficulty);
-        }
-
-        if (ch == 'W')
-        {
-            old_head_position = head_position;
-            head_position = draw_up(Map, head_position, map_height, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, ch);
-
-            if (!wall_shock)
-            {
-                Tail_movenent(tail_list, old_head_position);
-            }
-
-            if (tail_list.size() > 0)
-            {
-                draw_snake_tail(Map, tail_list);
-                Map.replace(tail_list.back(), 1, " ");
-            }
-
-            print(Map);
-            Sleep(difficulty);
-        }
-
-        if (ch == 'S')
-        {
+            break;
+        case 'S':
             old_head_position = head_position;
             head_position = draw_down(Map, head_position, map_height, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, ch);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
 
             if (!wall_shock)
-            {
                 Tail_movenent(tail_list, old_head_position);
-            }
 
             if (tail_list.size() > 0)
             {
                 draw_snake_tail(Map, tail_list);
                 Map.replace(tail_list.back(), 1, " ");
             }
+            break;
+        case 'D':
+            old_head_position = head_position;
+            head_position = draw_right(Map, head_position, map_width);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
 
-            print(Map);
-            Sleep(difficulty);
+            if (!wall_shock)
+                Tail_movenent(tail_list, old_head_position);
+
+            if (tail_list.size() > 0)
+            {
+                draw_snake_tail(Map, tail_list);
+                Map.replace(tail_list.back(), 1, " ");
+            }
+            break;
+
+        default:
+            break;
         }
 
         if (head_position == fruit_position)
@@ -118,18 +95,16 @@ int main()
             tail_increase_size(tail_list, old_head_position);
             fruit_position = draw_fruit_position(Map);
             score += 10;
-
             draw_snake_tail(Map, tail_list);
-
-            print(Map);
         }
-        cout << "Score: " << score << endl;
-        cout << "Lives: " << lives << endl;
+
+        print(Map);
+        Sleep(difficulty);
+
+        print_score(map_height, score, lives);
     }
 
     cout << "You are dead!";
-    while (!_kbhit())
-
-        system("cls");
+    system("cls");
     return 0;
 }

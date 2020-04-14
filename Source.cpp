@@ -43,50 +43,50 @@ int calculate_head_height(int head_position, int map_width)
     return head_position / map_width;
 }
 
-int draw_left(string &map, int &spaceship_position, int map_height, int map_width)
+int draw_left(string &map, int &head_position,  int map_width)
 {
-    if (spaceship_position % map_width > 1)
+    if (head_position % map_width > 1)
     {
-        map.replace(spaceship_position - 1, 2, "0 "); //Paramters: Position, Size, Content
-        spaceship_position--;
+        map.replace(head_position - 1, 2, "0 "); //Paramters: Position, Size, Content
+        head_position--;
     }
 
-    return spaceship_position;
+    return head_position;
 }
 
-int draw_right(string &map, int &spaceship_position, int map_height, int map_width)
+int draw_right(string &map, int &head_position, int map_width)
 {
-    if (spaceship_position % map_width < 23)
+    if (head_position % map_width < map_width - 3) // 3 por causa das duas paredes '#' e do \n
     {
-        map.replace(spaceship_position, 2, " 0"); //Paramters: Position, Size, Content
-        spaceship_position++;
+        map.replace(head_position, 2, " 0"); //Paramters: Position, Size, Content
+        head_position++;
     }
 
-    return spaceship_position;
+    return head_position;
 }
 
-int draw_up(string &map, int &spaceship_position, int map_height, int map_width)
+int draw_up(string &map, int &head_position, int map_width)
 {
-    if (spaceship_position / map_width > 1)
+    if (head_position / map_width > 1)
     {
-        map.replace(spaceship_position, 1, " "); //Paramters: Position, Size, Content
-        spaceship_position = spaceship_position - map_width;
-        map.replace(spaceship_position, 1, "0"); //Paramters: Position, Size, Content
+        map.replace(head_position, 1, " "); //Paramters: Position, Size, Content
+        head_position = head_position - map_width;
+        map.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
     }
-    return spaceship_position;
+    return head_position;
 }
-int draw_down(string &map, int &spaceship_position, int map_height, int map_width)
+int draw_down(string &map, int &head_position, int map_height, int map_width)
 {
-    if (spaceship_position < (map_height - 2) * map_width)
+    if (head_position < (map_height - 2) * map_width)
     {
-        map.replace(spaceship_position, 1, " "); //Paramters: Position, Size, Content
-        spaceship_position = spaceship_position + map_width;
-        map.replace(spaceship_position, 1, "0"); //Paramters: Position, Size, Content
+        map.replace(head_position, 1, " "); //Paramters: Position, Size, Content
+        head_position = head_position + map_width;
+        map.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
     }
-    return spaceship_position;
+    return head_position;
 }
 
-tuple<int,bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed)
+tuple<int, bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed)
 {
     bool head_hit_wall = false;
     int head_lock_ahead = calculate_next_head_position(head_position, map_width, key_pressed);
@@ -101,10 +101,10 @@ tuple<int,bool> detect_shock(string map, int head_position, int head_last_positi
         lives--;
     }
 
-    return make_tuple(lives, head_hit_wall) ;
+    return make_tuple(lives, head_hit_wall);
 }
 
-int calculate_next_head_position(int spaceship_position, int map_width, char key_pressed)
+int calculate_next_head_position(int head_position, int map_width, char key_pressed)
 {
 
     int head_next_position;
@@ -112,16 +112,16 @@ int calculate_next_head_position(int spaceship_position, int map_width, char key
     switch (key_pressed)
     {
     case 'W':
-        head_next_position = spaceship_position - map_width;
+        head_next_position = head_position - map_width;
         break;
     case 'A':
-        head_next_position = spaceship_position - 1;
+        head_next_position = head_position - 1;
         break;
     case 'S':
-        head_next_position = spaceship_position + map_width;
+        head_next_position = head_position + map_width;
         break;
     case 'D':
-        head_next_position = spaceship_position + 1;
+        head_next_position = head_position + 1;
         break;
 
     default:
@@ -187,4 +187,12 @@ void print(string txt)
 {
     gotoxy(0, 0);
     cout << txt << endl;
+}
+
+void print_score(int map_height, int score, int lives)
+{
+    gotoxy(1, map_height + 2);
+    cout << "Score: " << score << endl;
+    gotoxy(1, map_height + 3);
+    cout << "Lives: " << lives << endl;
 }
