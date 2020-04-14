@@ -5,13 +5,17 @@
 #include <conio.h>
 #include <time.h>
 #include <list>
+
+
+
+#define FRUIT '*'
+#define WALL '#'
+
+
+
 using namespace std;
 
-struct tail
-{
-    int position;
-};
-typedef struct tail Tail;
+
 
 void print(string txt);
 string get_file_content(const string path);

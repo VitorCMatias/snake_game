@@ -89,7 +89,7 @@ int draw_down(string &map, int &spaceship_position, int map_height, int map_widt
 int detect_shock(string map, int head_position, int head_last_position, int &lives,int map_width, char key_pressed)
 {
     int head_lock_ahead = calculate_next_head_position(head_position, map_width, key_pressed);
-    if (map.at(head_position ) == 'o' || /*map.at(head_lock_ahead) == '#*'*/head_position ==head_last_position)
+    if (map.at(head_lock_ahead ) == 'o' || /*map.at(head_lock_ahead) == '#*'*/head_position ==head_last_position)
         lives--;
     return lives;
 }
