@@ -86,12 +86,22 @@ int draw_down(string &map, int &spaceship_position, int map_height, int map_widt
     return spaceship_position;
 }
 
-int detect_shock(string map, int head_position, int head_last_position, int &lives,int map_width, char key_pressed)
+tuple<int,bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed)
 {
+    bool head_hit_wall = false;
     int head_lock_ahead = calculate_next_head_position(head_position, map_width, key_pressed);
-    if (map.at(head_lock_ahead ) == 'o' || /*map.at(head_lock_ahead) == '#*'*/head_position ==head_last_position)
+    if (map.at(head_lock_ahead) == 'o')
+    {
+        head_hit_wall = false;
         lives--;
-    return lives;
+    }
+    else if (head_position == head_last_position)
+    {
+        head_hit_wall = true;
+        lives--;
+    }
+
+    return make_tuple(lives, head_hit_wall) ;
 }
 
 int calculate_next_head_position(int spaceship_position, int map_width, char key_pressed)
@@ -108,16 +118,16 @@ int calculate_next_head_position(int spaceship_position, int map_width, char key
         head_next_position = spaceship_position - 1;
         break;
     case 'S':
-        head_next_position  = spaceship_position + map_width;
+        head_next_position = spaceship_position + map_width;
         break;
     case 'D':
-        head_next_position = spaceship_position+1;
+        head_next_position = spaceship_position + 1;
         break;
 
     default:
         break;
     }
-    
+
     return head_next_position;
 }
 

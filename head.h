@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <time.h>
 #include <list>
-
+#include <tuple>
 
 
 #define FRUIT '*'
@@ -27,7 +27,7 @@ int draw_right(string &map, int &spaceship_position, int map_height, int map_wid
 int draw_up(string &map, int &spaceship_position, int map_height, int map_width);
 int draw_down(string &map, int &spaceship_position, int map_height, int map_width);
 
-int detect_shock(string map, int head_position, int head_last_position, int &lives,int map_width, char key_pressed);
+tuple<int,bool> detect_shock(string map, int head_position, int head_last_position, int &lives,int map_width, char key_pressed);
 int calculate_next_head_position(int spaceship_position, int map_width, char key_pressed);
 
 int draw_fruit_position(string &map);
