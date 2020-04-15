@@ -43,9 +43,10 @@ int calculate_head_height(int head_position, int map_width)
     return head_position / map_width;
 }
 
-int draw_left(string &map, int &head_position,  int map_width)
+int draw_left(string &map, int &head_position, int map_width, int wall_position)
 {
-    if (head_position % map_width > 1)
+
+    if (head_position % map_width > 1 && head_position - 1 != wall_position)
     {
         map.replace(head_position - 1, 2, "0 "); //Paramters: Position, Size, Content
         head_position--;
@@ -54,9 +55,9 @@ int draw_left(string &map, int &head_position,  int map_width)
     return head_position;
 }
 
-int draw_right(string &map, int &head_position, int map_width)
+int draw_right(string &map, int &head_position, int map_width, int wall_position)
 {
-    if (head_position % map_width < map_width - 3) // 3 por causa das duas paredes '#' e do \n
+    if (head_position % map_width < map_width - 3 && head_position +1 != wall_position) // 3 por causa das duas paredes '#' e do \n
     {
         map.replace(head_position, 2, " 0"); //Paramters: Position, Size, Content
         head_position++;
@@ -65,9 +66,9 @@ int draw_right(string &map, int &head_position, int map_width)
     return head_position;
 }
 
-int draw_up(string &map, int &head_position, int map_width)
+int draw_up(string &map, int &head_position, int map_width, int wall_position)
 {
-    if (head_position / map_width > 1)
+    if (head_position / map_width > 1 && head_position - map_width != wall_position)
     {
         map.replace(head_position, 1, " "); //Paramters: Position, Size, Content
         head_position = head_position - map_width;
@@ -75,9 +76,9 @@ int draw_up(string &map, int &head_position, int map_width)
     }
     return head_position;
 }
-int draw_down(string &map, int &head_position, int map_height, int map_width)
+int draw_down(string &map, int &head_position, int map_height, int map_width, int wall_position)
 {
-    if (head_position < (map_height - 2) * map_width)
+    if (head_position < (map_height - 2) * map_width &&  head_position + map_width != wall_position)
     {
         map.replace(head_position, 1, " "); //Paramters: Position, Size, Content
         head_position = head_position + map_width;
@@ -86,7 +87,18 @@ int draw_down(string &map, int &head_position, int map_height, int map_width)
     return head_position;
 }
 
-tuple<int, bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed)
+int detect_wall(string map, int head_position, int map_width, char key_pressed)
+{
+    int wall_position = 0;
+    int head_lock_ahead = calculate_next_head_position(head_position, map_width, key_pressed);
+    if (map.at(head_lock_ahead) == '#')
+    {
+        wall_position = head_lock_ahead;
+    }
+    return wall_position;
+}
+
+tuple<int, bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed, int wall_position)
 {
     bool head_hit_wall = false;
     int head_lock_ahead = calculate_next_head_position(head_position, map_width, key_pressed);
@@ -96,6 +108,18 @@ tuple<int, bool> detect_shock(string map, int head_position, int head_last_posit
         lives--;
     }
     else if (head_position == head_last_position)
+    {
+        head_hit_wall = true;
+        lives--;
+    }
+    /* else if (map.at(head_lock_ahead) == '#')
+    {
+        aux = head_lock_ahead;
+        //head_hit_wall = true;
+        //lives--;
+    }*/
+
+    if (head_position == wall_position)
     {
         head_hit_wall = true;
         lives--;

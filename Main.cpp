@@ -18,6 +18,8 @@ int main()
     bool wall_shock = false;
     char key_pressed = 'W';
     char old_ch;
+    int aux = 0;
+    int wall_position;
     system("cls");
     print(Map);
     old_head_position = head_position;
@@ -31,8 +33,9 @@ int main()
         {
         case 'W':
             old_head_position = head_position;
-            head_position = draw_up(Map, head_position, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
+            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
+            head_position = draw_up(Map, head_position, map_width, wall_position);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
@@ -42,11 +45,13 @@ int main()
                 draw_snake_tail(Map, tail_list);
                 Map.replace(tail_list.back(), 1, " ");
             }
+
             break;
         case 'A':
             old_head_position = head_position;
-            head_position = draw_left(Map, head_position, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
+            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
+            head_position = draw_left(Map, head_position, map_width,wall_position);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
@@ -59,8 +64,9 @@ int main()
             break;
         case 'S':
             old_head_position = head_position;
-            head_position = draw_down(Map, head_position, map_height, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
+            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
+            head_position = draw_down(Map, head_position, map_height, map_width,wall_position);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
@@ -73,8 +79,9 @@ int main()
             break;
         case 'D':
             old_head_position = head_position;
-            head_position = draw_right(Map, head_position, map_width);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed);
+            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
+            head_position = draw_right(Map, head_position, map_width,wall_position);
+            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
@@ -108,3 +115,7 @@ int main()
     system("cls");
     return 0;
 }
+
+
+
+
