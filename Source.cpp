@@ -57,7 +57,7 @@ int draw_left(string &map, int &head_position, int map_width, int wall_position)
 
 int draw_right(string &map, int &head_position, int map_width, int wall_position)
 {
-    if (head_position % map_width < map_width - 3 && head_position +1 != wall_position) // 3 por causa das duas paredes '#' e do \n
+    if (head_position % map_width < map_width - 3 && head_position + 1 != wall_position) // 3 por causa das duas paredes '#' e do \n
     {
         map.replace(head_position, 2, " 0"); //Paramters: Position, Size, Content
         head_position++;
@@ -78,7 +78,7 @@ int draw_up(string &map, int &head_position, int map_width, int wall_position)
 }
 int draw_down(string &map, int &head_position, int map_height, int map_width, int wall_position)
 {
-    if (head_position < (map_height - 2) * map_width &&  head_position + map_width != wall_position)
+    if (head_position < (map_height - 2) * map_width && head_position + map_width != wall_position)
     {
         map.replace(head_position, 1, " "); //Paramters: Position, Size, Content
         head_position = head_position + map_width;
@@ -157,11 +157,12 @@ int calculate_next_head_position(int head_position, int map_width, char key_pres
 
 int draw_fruit_position(string &map)
 {
-    srand(time(NULL));
-    int fruit_position = rand() % map.length();
+    auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
+    mt19937 mt_rand(seed);
+    int fruit_position = mt_rand() % map.length();
 
     while (map.at(fruit_position) != ' ')
-        fruit_position = rand() % map.length();
+        fruit_position = mt_rand() % map.length();
 
     map.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
 

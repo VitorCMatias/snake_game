@@ -3,6 +3,8 @@
 //#include <algorithm>
 #include <Windows.h>
 #include <conio.h>
+#include<random>
+#include<chrono>
 #include <time.h>
 #include <list>
 #include <tuple>
