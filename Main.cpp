@@ -6,9 +6,9 @@ int main()
 {
     Timer timer;
     string Map = get_file_content("Map.txt");
-    int head_position = find_head_position(Map);
     int map_height = calculate_map_height(Map);
     int map_width = calculate_map_width(Map);
+    int head_position = find_head_position(Map);
     int lives = 1;
     int fruit_position = Map.find('*');
     int score = 0;
