@@ -4,7 +4,7 @@
 
 int main()
 {
-
+    Timer timer;
     string Map = get_file_content("Map.txt");
     int head_position = find_head_position(Map);
     int map_height = calculate_map_height(Map);
@@ -18,13 +18,14 @@ int main()
     bool wall_shock = false;
     char key_pressed = 'W';
     char old_ch;
-    int aux = 0;
+    float aux = 0;
     int wall_position;
     system("cls");
     print(Map);
     old_head_position = head_position;
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
+        timer.start();
 
         if (_kbhit())
             key_pressed = toupper(getch());
@@ -39,7 +40,7 @@ int main()
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
-        
+
             if (tail_list.size() > 0)
             {
                 draw_snake_tail(Map, tail_list);
@@ -50,12 +51,12 @@ int main()
         case 'A':
             old_head_position = head_position;
             wall_position = detect_wall(Map, head_position, map_width, key_pressed);
-            head_position = draw_left(Map, head_position, map_width,wall_position);
+            head_position = draw_left(Map, head_position, map_width, wall_position);
             tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
-            
+
             if (tail_list.size() > 0)
             {
                 draw_snake_tail(Map, tail_list);
@@ -65,7 +66,7 @@ int main()
         case 'S':
             old_head_position = head_position;
             wall_position = detect_wall(Map, head_position, map_width, key_pressed);
-            head_position = draw_down(Map, head_position, map_height, map_width,wall_position);
+            head_position = draw_down(Map, head_position, map_height, map_width, wall_position);
             tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
 
             if (!wall_shock)
@@ -80,7 +81,7 @@ int main()
         case 'D':
             old_head_position = head_position;
             wall_position = detect_wall(Map, head_position, map_width, key_pressed);
-            head_position = draw_right(Map, head_position, map_width,wall_position);
+            head_position = draw_right(Map, head_position, map_width, wall_position);
             tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
 
             if (!wall_shock)
@@ -107,15 +108,15 @@ int main()
 
         print(Map);
         Sleep(difficulty);
+        timer.stop();
+        aux = aux + timer.elapsedMilliseconds();
+        printf("%0.1f\n",aux/1000.0);
 
-        print_score(map_height, score, lives);
+        //print_score(map_height, score, lives);
     }
 
     cout << "You are dead!";
     system("cls");
+
     return 0;
 }
-
-
-
-

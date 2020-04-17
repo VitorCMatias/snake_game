@@ -221,3 +221,4 @@ void print_score(int map_height, int score, int lives)
     gotoxy(1, map_height + 3);
     cout << "Lives: " << lives << endl;
 }
+

@@ -3,21 +3,54 @@
 //#include <algorithm>
 #include <Windows.h>
 #include <conio.h>
-#include<random>
-#include<chrono>
+#include <random>
+#include <chrono>
 #include <time.h>
 #include <list>
 #include <tuple>
-
+#include <thread>
 
 #define FRUIT '*'
 #define WALL '#'
 
-
-
 using namespace std;
 
+class Timer
+{
+public:
+    void start()
+    {
+        m_StartTime = std::chrono::system_clock::now();
+        m_bRunning = true;
+    }
 
+    void stop()
+    {
+        m_EndTime = std::chrono::system_clock::now();
+        m_bRunning = false;
+    }
+
+    double elapsedMilliseconds()
+    {
+        std::chrono::time_point<std::chrono::system_clock> endTime;
+
+        if (m_bRunning)
+        {
+            endTime = std::chrono::system_clock::now();
+        }
+        else
+        {
+            endTime = m_EndTime;
+        }
+
+        return std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_StartTime).count();
+    }
+
+private:
+    std::chrono::time_point<std::chrono::system_clock> m_StartTime;
+    std::chrono::time_point<std::chrono::system_clock> m_EndTime;
+    bool m_bRunning = false;
+};
 
 void print(string txt);
 string get_file_content(const string path);
@@ -29,7 +62,7 @@ int draw_right(string &map, int &head_position, int map_width, int wall_position
 int draw_up(string &map, int &head_position, int map_width, int wall_position);
 int draw_down(string &map, int &head_position, int map_height, int map_width, int wall_position);
 
-tuple<int,bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed, int wall_position);
+tuple<int, bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed, int wall_position);
 int calculate_next_head_position(int head_position, int map_width, char key_pressed);
 
 int draw_fruit_position(string &map);
