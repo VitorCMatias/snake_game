@@ -1,5 +1,29 @@
 #include "head.h"
 
+void Timer::start()
+{
+    m_StartTime = std::chrono::system_clock::now();
+    m_bRunning = true;
+}
+
+void Timer::stop()
+{
+    m_EndTime = std::chrono::system_clock::now();
+    m_bRunning = false;
+}
+
+double Timer::elapsedMilliseconds()
+{
+    std::chrono::time_point<std::chrono::system_clock> endTime;
+
+    if (m_bRunning)
+        endTime = std::chrono::system_clock::now();
+    else
+        endTime = m_EndTime;
+
+    return std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_StartTime).count();
+}
+
 void gotoxy(short x, short y)
 {
     COORD pos = {x, y};
@@ -221,4 +245,3 @@ void print_score(int map_height, int score, int lives)
     gotoxy(1, map_height + 3);
     cout << "Lives: " << lives << endl;
 }
-

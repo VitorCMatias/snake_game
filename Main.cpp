@@ -20,6 +20,7 @@ int main()
     char old_ch;
     float aux = 0;
     int wall_position;
+    int time_position = Map.find("%");
     system("cls");
     print(Map);
     old_head_position = head_position;
@@ -110,7 +111,7 @@ int main()
         Sleep(difficulty);
         timer.stop();
         aux = aux + timer.elapsedMilliseconds();
-        printf("%0.1f\n",aux/1000.0);
+        printf("%0.1f\n", aux / 1000.0);
 
         //print_score(map_height, score, lives);
     }
