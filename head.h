@@ -28,15 +28,26 @@ private:
     bool m_bRunning = false;
 };
 
+class Map
+{
+//protected:
+public:
+    string map;
+    int width;
+    int height;
+private:
+    int calculate_width();
+    int calculate_height();
+    string get_file_content(const string path); 
+public:
+    void print(); 
+    Map();
 
+private:
 
+};
 
-
-void print(string txt);                     //sys
-string get_file_content(const string path); //map
-int calculate_map_width(string map);        //map
-int calculate_map_height(string map);       //map
-int find_head_position(const string map);   //head
+int find_head_position(const string map); //head
 
 int draw_left(string &map, int &head_position, int map_width, int wall_position);                 //move
 int draw_right(string &map, int &head_position, int map_width, int wall_position);                //move
@@ -52,7 +63,7 @@ void Tail_movenent(list<int> &tail_list, int head_position);      //tail
 void tail_increase_size(list<int> &tail_list, int head_position); //tail
 void draw_snake_tail(string &map, list<int> tail);                //tail
 
-int detect_wall(string map, int head_position, int map_width, char key_pressed);
+int detect_wall(string map, int head_position, int map_width, char key_pressed); //head
 
 void display_list(list<int> l);
 void print_score(int map_height, int score, int lives);

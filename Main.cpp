@@ -4,13 +4,15 @@
 
 int main()
 {
+
     Timer timer;
-    string Map = get_file_content("Map.txt");
-    int map_height = calculate_map_height(Map);
-    int map_width = calculate_map_width(Map);
-    int head_position = find_head_position(Map);
+    Map Map;
+    //string Map = get_file_content("Map.txt");
+    //int map_height = calculate_map_height(Map);
+    //int map_width = calculate_map_width(Map);
+    int head_position = find_head_position(Map.map);
     int lives = 1;
-    int fruit_position = Map.find('*');
+    int fruit_position = Map.map.find('*');
     int score = 0;
     int difficulty = 80;
     int old_head_position;
@@ -20,9 +22,9 @@ int main()
     char old_ch;
     float aux = 0;
     int wall_position;
-    int time_position = Map.find("%");
+    int time_position = Map.map.find("%");
     system("cls");
-    print(Map);
+    Map.print();
     old_head_position = head_position;
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
@@ -35,63 +37,63 @@ int main()
         {
         case 'W':
             old_head_position = head_position;
-            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
-            head_position = draw_up(Map, head_position, map_width, wall_position);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
+            wall_position = detect_wall(Map.map, head_position, Map.width, key_pressed);
+            head_position = draw_up(Map.map, head_position, Map.width, wall_position);
+            tie(lives, wall_shock) = detect_shock(Map.map, head_position, old_head_position, lives, Map.width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
 
             if (tail_list.size() > 0)
             {
-                draw_snake_tail(Map, tail_list);
-                Map.replace(tail_list.back(), 1, " ");
+                draw_snake_tail(Map.map, tail_list);
+                Map.map.replace(tail_list.back(), 1, " ");
             }
 
             break;
         case 'A':
             old_head_position = head_position;
-            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
-            head_position = draw_left(Map, head_position, map_width, wall_position);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
+            wall_position = detect_wall(Map.map, head_position, Map.width, key_pressed);
+            head_position = draw_left(Map.map, head_position, Map.width, wall_position);
+            tie(lives, wall_shock) = detect_shock(Map.map, head_position, old_head_position, lives, Map.width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
 
             if (tail_list.size() > 0)
             {
-                draw_snake_tail(Map, tail_list);
-                Map.replace(tail_list.back(), 1, " ");
+                draw_snake_tail(Map.map, tail_list);
+                Map.map.replace(tail_list.back(), 1, " ");
             }
             break;
         case 'S':
             old_head_position = head_position;
-            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
-            head_position = draw_down(Map, head_position, map_height, map_width, wall_position);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
+            wall_position = detect_wall(Map.map, head_position, Map.width, key_pressed);
+            head_position = draw_down(Map.map, head_position, Map.width, Map.width, wall_position);
+            tie(lives, wall_shock) = detect_shock(Map.map, head_position, old_head_position, lives, Map.width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
 
             if (tail_list.size() > 0)
             {
-                draw_snake_tail(Map, tail_list);
-                Map.replace(tail_list.back(), 1, " ");
+                draw_snake_tail(Map.map, tail_list);
+                Map.map.replace(tail_list.back(), 1, " ");
             }
             break;
         case 'D':
             old_head_position = head_position;
-            wall_position = detect_wall(Map, head_position, map_width, key_pressed);
-            head_position = draw_right(Map, head_position, map_width, wall_position);
-            tie(lives, wall_shock) = detect_shock(Map, head_position, old_head_position, lives, map_width, key_pressed, wall_position);
+            wall_position = detect_wall(Map.map, head_position, Map.width, key_pressed);
+            head_position = draw_right(Map.map, head_position, Map.width, wall_position);
+            tie(lives, wall_shock) = detect_shock(Map.map, head_position, old_head_position, lives, Map.width, key_pressed, wall_position);
 
             if (!wall_shock)
                 Tail_movenent(tail_list, old_head_position);
 
             if (tail_list.size() > 0)
             {
-                draw_snake_tail(Map, tail_list);
-                Map.replace(tail_list.back(), 1, " ");
+                draw_snake_tail(Map.map, tail_list);
+                Map.map.replace(tail_list.back(), 1, " ");
             }
             break;
 
@@ -102,15 +104,16 @@ int main()
         if (head_position == fruit_position)
         {
             tail_increase_size(tail_list, old_head_position);
-            fruit_position = draw_fruit_position(Map);
+            fruit_position = draw_fruit_position(Map.map);
             score += 10;
-            draw_snake_tail(Map, tail_list);
+            draw_snake_tail(Map.map, tail_list);
         }
 
-        print(Map);
+        Map.print();
         Sleep(difficulty);
         timer.stop();
         aux = aux + timer.elapsedMilliseconds();
+        cout<<Map.width;
         printf("%0.1f\n", aux / 1000.0);
 
         //print_score(map_height, score, lives);

@@ -31,7 +31,7 @@ void gotoxy(short x, short y)
     SetConsoleCursorPosition(output, pos);
 }
 
-string get_file_content(const string path)
+string Map::get_file_content(const string path)
 {
     /*
 	    Utiliza um iterator - ponteiros para enderecos de memoria- para construir uma string com os dados da ifstream - input file stream.
@@ -45,16 +45,28 @@ string get_file_content(const string path)
     return content;
 }
 
-int calculate_map_width(string map)
+int Map::calculate_width()
 {
     return (map.find('\n') + 1);
 }
 
-int calculate_map_height(string map)
+int Map::calculate_height()
 {
-    int map_width = calculate_map_width(map);
 
-    return (map.size() / map_width) + 1;
+    return (map.size() / width) + 1;
+}
+
+Map::Map()
+{
+    this->map = get_file_content("Map.txt");
+    this->width = calculate_width();
+    this->height = calculate_height();
+}
+
+void Map::print()
+{
+    gotoxy(0, 0);
+    cout << map << endl;
 }
 
 int find_head_position(const string map)
@@ -98,6 +110,7 @@ int draw_up(string &map, int &head_position, int map_width, int wall_position)
         head_position = head_position - map_width;
         map.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
     }
+
     return head_position;
 }
 int draw_down(string &map, int &head_position, int map_height, int map_width, int wall_position)
@@ -230,12 +243,6 @@ void display_list(list<int> l)
     for (int x : l)
         cout << x << " ";
     cout << endl;
-}
-
-void print(string txt)
-{
-    gotoxy(0, 0);
-    cout << txt << endl;
 }
 
 void print_score(int map_height, int score, int lives)
