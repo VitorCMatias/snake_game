@@ -140,56 +140,49 @@ Head::Head()
     this->wall_shock = false;
 }
 
-
-
-
-
-
-
-
-int draw_left(string &map, int &head_position, int map_width, int wall_position)
+void Head::draw_left(string &map)
 {
 
-    if (head_position % map_width > 1 && head_position - 1 != wall_position)
+    if (this->head_position % this->width > 1 && this->head_position - 1 != this->wall_position)
     {
-        map.replace(head_position - 1, 2, "0 "); //Paramters: Position, Size, Content
-        head_position--;
+        map.replace(this->head_position - 1, 2, "0 "); //Paramters: Position, Size, Content
+        this->head_position--;
     }
 
-    return head_position;
+    //return head_position;
 }
 
-int draw_right(string &map, int &head_position, int map_width, int wall_position)
+void Head::draw_right(string &map)
 {
-    if (head_position % map_width < map_width - 3 && head_position + 1 != wall_position) // 3 por causa das duas paredes '#' e do \n
+    if (this->head_position % this->width < this->width - 3 && this->head_position + 1 != this->wall_position) // 3 por causa das duas paredes '#' e do \n
     {
-        map.replace(head_position, 2, " 0"); //Paramters: Position, Size, Content
-        head_position++;
+        map.replace(this->head_position, 2, " 0"); //Paramters: Position, Size, Content
+        this->head_position++;
     }
 
-    return head_position;
+    //return head_position;
 }
 
-int draw_up(string &map, int &head_position, int map_width, int wall_position)
+void Head::draw_up(string &map)
 {
-    if (head_position / map_width > 1 && head_position - map_width != wall_position)
+    if (this->head_position / this->width > 1 && this->head_position - this->width != this->wall_position)
     {
-        map.replace(head_position, 1, " "); //Paramters: Position, Size, Content
-        head_position = head_position - map_width;
-        map.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
+        map.replace(this->head_position, 1, " "); //Paramters: Position, Size, Content
+        this->head_position = this->head_position - this->width;
+        map.replace(this->head_position, 1, "0"); //Paramters: Position, Size, Content
     }
 
-    return head_position;
+    //return head_position;
 }
-int draw_down(string &map, int &head_position, int map_height, int map_width, int wall_position)
+void Head::draw_down(string &map)
 {
-    if (head_position < (map_height - 2) * map_width && head_position + map_width != wall_position)
+    if (this->head_position < (this->height - 2) * this->width && this->head_position + this->width != this->wall_position)
     {
-        map.replace(head_position, 1, " "); //Paramters: Position, Size, Content
-        head_position = head_position + map_width;
-        map.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
+        map.replace(this->head_position, 1, " "); //Paramters: Position, Size, Content
+        this->head_position = this->head_position + this->width;
+        map.replace(this->head_position, 1, "0"); //Paramters: Position, Size, Content
     }
-    return head_position;
+    //return head_position;
 }
 
 int draw_fruit_position(string &map)

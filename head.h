@@ -57,20 +57,22 @@ public:
     int wall_position;
 
 public:
-    int find_position(); 
+    int find_position();
     tuple<int, bool> detect_shock(int &lives, char key_pressed);
     int calculate_next_position(char key_pressed);
     int detect_wall(char key_pressed);
+    void draw_left(string &map);                 
+    void draw_right(string &map);                //move
+    void draw_up(string &map);                   //move
+    void draw_down(string &map); //move
 
 public:
     Head();
-
 };
 
-int draw_left(string &map, int &head_position, int map_width, int wall_position);                 //move
-int draw_right(string &map, int &head_position, int map_width, int wall_position);                //move
-int draw_up(string &map, int &head_position, int map_width, int wall_position);                   //move
-int draw_down(string &map, int &head_position, int map_height, int map_width, int wall_position); //move
+class Move : public Head
+{
+};
 
 int draw_fruit_position(string &map); //fruit
 

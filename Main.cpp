@@ -40,7 +40,7 @@ int main()
         case 'W':
             head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
-            head.head_position = draw_up(Map.map, head.head_position, Map.width, head.wall_position);
+            head.draw_up(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives,key_pressed);
 
             if (!head.wall_shock)
@@ -56,7 +56,7 @@ int main()
         case 'A':
             head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
-            head.head_position = draw_left(Map.map, head.head_position, Map.width, head.wall_position);
+            head.draw_left(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives,key_pressed);
 
             if (!head.wall_shock)
@@ -71,7 +71,7 @@ int main()
         case 'S':
             head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
-            head.head_position = draw_down(Map.map, head.head_position, Map.width, Map.width, head.wall_position);
+            head.draw_down(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives,key_pressed);
 
             if (!head.wall_shock)
@@ -86,7 +86,7 @@ int main()
         case 'D':
             head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
-            head.head_position = draw_right(Map.map, head.head_position, Map.width, head.wall_position);
+            head.draw_right(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives,key_pressed);
 
             if (!head.wall_shock)
