@@ -52,7 +52,6 @@ int Map::calculate_width()
 
 int Map::calculate_height()
 {
-
     return (map.size() / width) + 1;
 }
 
@@ -69,15 +68,84 @@ void Map::print()
     cout << map << endl;
 }
 
-int find_head_position(const string map)
+int Head::find_position()
 {
-    return map.find('0');
+    return this->map.find('0');
+}
+int Head::detect_wall(char key_pressed)
+{
+    int wall_position = 0;
+    int head_lock_ahead = calculate_next_position(key_pressed);
+    if (this->map.at(head_lock_ahead) == '#')
+    {
+        wall_position = head_lock_ahead;
+    }
+    return wall_position;
 }
 
-int calculate_head_height(int head_position, int map_width)
+tuple<int, bool> Head::detect_shock(int &lives, char key_pressed)
 {
-    return head_position / map_width;
+    bool head_hit_wall = false;
+    int head_lock_ahead = calculate_next_position(key_pressed);
+    if (this->map.at(head_lock_ahead) == 'o')
+    {
+        head_hit_wall = false;
+        lives--;
+    }
+    else if (this->head_position == this->head_last_position)
+    {
+        head_hit_wall = true;
+        lives--;
+    }
+
+    if (this->head_position == this->wall_position)
+    {
+        head_hit_wall = true;
+        lives--;
+    }
+
+    return make_tuple(lives, head_hit_wall);
 }
+
+int Head::calculate_next_position(char key_pressed)
+{
+
+    int head_next_position;
+
+    switch (key_pressed)
+    {
+    case 'W':
+        head_next_position = this->head_position - this->width;
+        break;
+    case 'A':
+        head_next_position = this->head_position - 1;
+        break;
+    case 'S':
+        head_next_position = this->head_position + this->width;
+        break;
+    case 'D':
+        head_next_position = this->head_position + 1;
+        break;
+
+    default:
+        break;
+    }
+
+    return head_next_position;
+}
+
+Head::Head()
+{
+    this->head_position = find_position();
+    this->wall_shock = false;
+}
+
+
+
+
+
+
+
 
 int draw_left(string &map, int &head_position, int map_width, int wall_position)
 {
@@ -122,74 +190,6 @@ int draw_down(string &map, int &head_position, int map_height, int map_width, in
         map.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
     }
     return head_position;
-}
-
-int detect_wall(string map, int head_position, int map_width, char key_pressed)
-{
-    int wall_position = 0;
-    int head_lock_ahead = calculate_next_head_position(head_position, map_width, key_pressed);
-    if (map.at(head_lock_ahead) == '#')
-    {
-        wall_position = head_lock_ahead;
-    }
-    return wall_position;
-}
-
-tuple<int, bool> detect_shock(string map, int head_position, int head_last_position, int &lives, int map_width, char key_pressed, int wall_position)
-{
-    bool head_hit_wall = false;
-    int head_lock_ahead = calculate_next_head_position(head_position, map_width, key_pressed);
-    if (map.at(head_lock_ahead) == 'o')
-    {
-        head_hit_wall = false;
-        lives--;
-    }
-    else if (head_position == head_last_position)
-    {
-        head_hit_wall = true;
-        lives--;
-    }
-    /* else if (map.at(head_lock_ahead) == '#')
-    {
-        aux = head_lock_ahead;
-        //head_hit_wall = true;
-        //lives--;
-    }*/
-
-    if (head_position == wall_position)
-    {
-        head_hit_wall = true;
-        lives--;
-    }
-
-    return make_tuple(lives, head_hit_wall);
-}
-
-int calculate_next_head_position(int head_position, int map_width, char key_pressed)
-{
-
-    int head_next_position;
-
-    switch (key_pressed)
-    {
-    case 'W':
-        head_next_position = head_position - map_width;
-        break;
-    case 'A':
-        head_next_position = head_position - 1;
-        break;
-    case 'S':
-        head_next_position = head_position + map_width;
-        break;
-    case 'D':
-        head_next_position = head_position + 1;
-        break;
-
-    default:
-        break;
-    }
-
-    return head_next_position;
 }
 
 int draw_fruit_position(string &map)
