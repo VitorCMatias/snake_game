@@ -245,3 +245,50 @@ void print_score(int map_height, int score, int lives)
     gotoxy(1, map_height + 3);
     cout << "Lives: " << lives << endl;
 }
+
+void print_information(int map_height, int map_width, int lives, int score, float timer)
+{
+    timer = timer / 1000.0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        gotoxy(1, map_height + i);
+        for (int j = 1; j < map_width - 1; j++)
+        {
+            if (i != 0 && i != 1)
+            {
+                printf("#");
+            }
+            else
+            {
+                gotoxy(1, map_height + i);
+                printf("#");
+                gotoxy(map_width - 2, map_height + i);
+                printf("#");
+            }
+        }
+        printf("\n");
+    }
+
+    gotoxy(4, map_height);
+    printf("LIVES");
+    gotoxy(6, map_height + 1);
+    printf("%d", lives);
+
+    gotoxy(24, map_height);
+    printf("SCORE");
+
+    if (score < 100)
+        gotoxy(26, map_height + 1);
+    else
+        gotoxy(27, map_height + 1);
+    printf("%d", score);
+
+    gotoxy(map_width - 8, map_height);
+    printf("TIME");
+    gotoxy(map_width - 8, map_height + 1);
+    if (timer < 100.0)
+        printf("%0.1f", timer);
+    else
+        printf("%0.0f", timer);
+}

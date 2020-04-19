@@ -56,3 +56,5 @@ int detect_wall(string map, int head_position, int map_width, char key_pressed);
 
 void display_list(list<int> l);
 void print_score(int map_height, int score, int lives);
+
+void print_information(int map_height, int map_width, int lives,int score,float timer);

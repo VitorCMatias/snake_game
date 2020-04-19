@@ -12,7 +12,7 @@ int main()
     int lives = 1;
     int fruit_position = Map.find('*');
     int score = 0;
-    int difficulty = 80;
+    int difficulty = 65;
     int old_head_position;
     list<int> tail_list;
     bool wall_shock = false;
@@ -111,12 +111,13 @@ int main()
         Sleep(difficulty);
         timer.stop();
         aux = aux + timer.elapsedMilliseconds();
-        printf("%0.1f\n", aux / 1000.0);
+        //printf("%0.1f\n", aux / 1000.0);
+        print_information(map_height, map_width,lives,score,aux);
 
         //print_score(map_height, score, lives);
     }
 
-    cout << "You are dead!";
+    //cout << "You are dead!";
     system("cls");
 
     return 0;
