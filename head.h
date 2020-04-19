@@ -42,6 +42,7 @@ private:
     string get_file_content(const string path);
 
 public:
+    
     void print();
     Map();
 
@@ -61,17 +62,20 @@ public:
     tuple<int, bool> detect_shock(int &lives, char key_pressed);
     int calculate_next_position(char key_pressed);
     int detect_wall(char key_pressed);
-    void draw_left(string &map);                 
-    void draw_right(string &map);                //move
-    void draw_up(string &map);                   //move
-    void draw_down(string &map); //move
+    void draw_left(string &map);
+    void draw_right(string &map);
+    void draw_up(string &map);
+    void draw_down(string &map);
 
 public:
     Head();
 };
 
-class Move : public Head
+class Tail : public Head
 {
+public: 
+     list<int> tail_list;
+     
 };
 
 int draw_fruit_position(string &map); //fruit

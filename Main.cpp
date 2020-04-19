@@ -115,7 +115,10 @@ int main()
         Sleep(difficulty);
         timer.stop();
         aux = aux + timer.elapsedMilliseconds();
-        
+
+
+        printf("Size: %d\n", tail_list.size());
+        printf("Score: %d\n", score);
         printf("%0.1f\n", aux / 1000.0);
 
         //print_score(map_height, score, lives);

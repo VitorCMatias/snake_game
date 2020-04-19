@@ -68,6 +68,9 @@ void Map::print()
     cout << map << endl;
 }
 
+
+
+
 int Head::find_position()
 {
     return this->map.find('0');
@@ -142,14 +145,11 @@ Head::Head()
 
 void Head::draw_left(string &map)
 {
-
     if (this->head_position % this->width > 1 && this->head_position - 1 != this->wall_position)
     {
         map.replace(this->head_position - 1, 2, "0 "); //Paramters: Position, Size, Content
         this->head_position--;
     }
-
-    //return head_position;
 }
 
 void Head::draw_right(string &map)
@@ -159,8 +159,6 @@ void Head::draw_right(string &map)
         map.replace(this->head_position, 2, " 0"); //Paramters: Position, Size, Content
         this->head_position++;
     }
-
-    //return head_position;
 }
 
 void Head::draw_up(string &map)
@@ -171,8 +169,6 @@ void Head::draw_up(string &map)
         this->head_position = this->head_position - this->width;
         map.replace(this->head_position, 1, "0"); //Paramters: Position, Size, Content
     }
-
-    //return head_position;
 }
 void Head::draw_down(string &map)
 {
@@ -182,7 +178,6 @@ void Head::draw_down(string &map)
         this->head_position = this->head_position + this->width;
         map.replace(this->head_position, 1, "0"); //Paramters: Position, Size, Content
     }
-    //return head_position;
 }
 
 int draw_fruit_position(string &map)
@@ -231,12 +226,6 @@ void draw_snake_tail(string &map, list<int> tail)
     }
 }
 
-void display_list(list<int> l)
-{
-    for (int x : l)
-        cout << x << " ";
-    cout << endl;
-}
 
 void print_score(int map_height, int score, int lives)
 {
