@@ -57,26 +57,29 @@ class Head : public Map
 public:
     int head_position;
     int head_last_position;
-    bool wall_shock;
+
+private:
     int wall_position;
 
+private:
+    int find_position();                           //priv
+    bool detect_shock(char key_pressed);           //priv
+    int calculate_next_position(char key_pressed); //priv
+    int detect_wall(char key_pressed);             //priv
+    void draw_left(string &map);                   //priv
+    void draw_right(string &map);                  //priv
+    void draw_up(string &map);                     //priv
+    void draw_down(string &map);                   //priv
 public:
-    int find_position();
-    bool detect_shock(char key_pressed);
-    int calculate_next_position(char key_pressed);
-    int detect_wall(char key_pressed);
-    void draw_left(string &map);
-    void draw_right(string &map);
-    void draw_up(string &map);
-    void draw_down(string &map);
+    bool wall_shock;
+
+public:
+    Head();
     int inform_position();
     void move_up(string &map);
     void move_left(string &map);
     void move_right(string &map);
     void move_down(string &map);
-
-public:
-    Head();
 };
 
 class Tail : public Head
