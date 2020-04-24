@@ -42,7 +42,6 @@ private:
     string get_file_content(const string path);
 
 public:
-    
     void print();
     Map();
 
@@ -66,6 +65,7 @@ public:
     void draw_right(string &map);
     void draw_up(string &map);
     void draw_down(string &map);
+    int inform_position();
 
 public:
     Head();
@@ -73,16 +73,16 @@ public:
 
 class Tail : public Head
 {
-public: 
-     list<int> tail_list;
-     
+public:
+    list<int> tail_list;
+
+    void Tail_movenent(list<int> &tail_list, int head_position);      //tail
+    void tail_increase_size(list<int> &tail_list, int head_position); //tail
+    void draw_snake_tail(string &map, list<int> tail_list);                //tail
+    
 };
 
 int draw_fruit_position(string &map); //fruit
-
-void Tail_movenent(list<int> &tail_list, int head_position);      //tail
-void tail_increase_size(list<int> &tail_list, int head_position); //tail
-void draw_snake_tail(string &map, list<int> tail);                //tail
 
 void display_list(list<int> l);
 void print_score(int map_height, int score, int lives);

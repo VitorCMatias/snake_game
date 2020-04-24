@@ -180,6 +180,12 @@ void Head::draw_down(string &map)
     }
 }
 
+
+int Head::inform_position(){
+    return this->head_position;
+}
+
+
 int draw_fruit_position(string &map)
 {
     auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
@@ -194,35 +200,43 @@ int draw_fruit_position(string &map)
     return fruit_position;
 }
 
-void Tail_movenent(list<int> &tail_list, int head_position)
+
+
+
+
+
+
+
+
+void Tail::Tail_movenent(list<int> &tail_list, int head_last_position)
 {
     if (tail_list.size() == 1)
     {
-        tail_list.push_front(head_position);
+        tail_list.push_front(head_last_position);
     }
     else
     {
-        tail_list.push_front(head_position);
+        tail_list.push_front(head_last_position);
         tail_list.pop_back();
     }
 }
 
-void tail_increase_size(list<int> &tail_list, int head_position)
+void Tail::tail_increase_size(list<int> &tail_list, int head_position)
 {
     tail_list.push_front(head_position);
 }
 
-void draw_snake_tail(string &map, list<int> tail)
+void Tail::draw_snake_tail(string &map, list<int> tail_list)
 {
-    if (tail.size() == 1)
-        map.replace(tail.front(), 1, "o");
+    if (tail_list.size() == 1)
+        map.replace(tail_list.front(), 1, "o");
     else
     {
-        for (int node : tail)
+        for (int node : tail_list)
         {
             map.replace(node, 1, "o"); //Paramters: Position, Size, Content
         }
-        map.replace(tail.back(), 1, " ");
+        map.replace(tail_list.back(), 1, " ");
     }
 }
 
