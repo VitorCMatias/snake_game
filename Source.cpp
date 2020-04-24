@@ -201,10 +201,19 @@ void Head::move_down(string &map)
     this->wall_shock = detect_shock(MOVE_DOWN);
 }
 
-void Head::set_last_position(){
+void Head::set_last_position()
+{
     this->head_last_position = this->head_position;
 }
 
+int Head::get_last_position()
+{
+    return this->head_last_position;
+}
+int Head::get_position()
+{
+    return this->head_position;
+}
 
 int draw_fruit_position(string &map)
 {
@@ -220,7 +229,7 @@ int draw_fruit_position(string &map)
     return fruit_position;
 }
 
-void Tail::Tail_movenent( int head_last_position)
+void Tail::Tail_movenent(int head_last_position)
 {
     if (this->tail_list.size() == 1)
     {

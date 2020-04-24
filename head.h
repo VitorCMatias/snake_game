@@ -54,33 +54,35 @@ public:
 
 class Head : public Map
 {
-public:
-    int head_position;
-    int head_last_position;
+    private:
+        int head_position;
+        int head_last_position;
+        int wall_position;
 
-private:
-    int wall_position;
+    private:
+        int find_position();
+        bool detect_shock(char key_pressed);
+        int calculate_next_position(char key_pressed);
+        int detect_wall(char key_pressed);
+        void draw_left(string &map);
+        void draw_right(string &map);
+        void draw_up(string &map);
+        void draw_down(string &map);
 
-private:
-    int find_position();                           
-    bool detect_shock(char key_pressed);           
-    int calculate_next_position(char key_pressed); 
-    int detect_wall(char key_pressed);             
-    void draw_left(string &map);                   
-    void draw_right(string &map);                  
-    void draw_up(string &map);                     
-    void draw_down(string &map);                   
-public:
-    bool wall_shock;
+    public:
+        bool wall_shock;
 
-public:
-    Head();
-    void set_last_position();
-    int inform_position();
-    void move_up(string &map);
-    void move_left(string &map);
-    void move_right(string &map);
-    void move_down(string &map);
+    public:
+        Head();
+        void set_last_position();
+        int inform_position();
+        void move_up(string &map);
+        void move_left(string &map);
+        void move_right(string &map);
+        void move_down(string &map);
+        int get_last_position();
+        int get_position();
+
 };
 
 class Tail : public Head
@@ -88,9 +90,9 @@ class Tail : public Head
 public:
     list<int> tail_list;
 
-    void Tail_movenent(int head_last_position);      //tail
-    void tail_increase_size(int head_position); //tail
-    void draw_snake_tail(string &map);           //tail
+    void Tail_movenent(int head_last_position); 
+    void tail_increase_size(int head_position); 
+    void draw_snake_tail(string &map);          
     void move(string &map);
 };
 

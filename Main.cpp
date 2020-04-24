@@ -15,9 +15,8 @@ int main()
     int score = 0;
     int difficulty = 80;
     char key_pressed = 'W';
-    char old_ch;
     float clock = 0;
-    int time_position = Map.map.find("%");
+
     system("cls");
     Map.print();
     head.set_last_position();
@@ -52,13 +51,13 @@ int main()
         if (head.wall_shock)
             lives--;
         else
-            tail.Tail_movenent( head.head_last_position);
+            tail.Tail_movenent( head.get_last_position());
 
         tail.move(Map.map);
 
-        if (head.head_position == fruit_position)
+        if (head.get_position() == fruit_position)
         {
-            tail.tail_increase_size(head.head_last_position);
+            tail.tail_increase_size(head.get_last_position());
             tail.move(Map.map);
             fruit_position = draw_fruit_position(Map.map);
             score += 10;
