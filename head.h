@@ -75,6 +75,7 @@ public:
 
 public:
     Head();
+    void get_last_position();
     int inform_position();
     void move_up(string &map);
     void move_left(string &map);
@@ -87,9 +88,9 @@ class Tail : public Head
 public:
     list<int> tail_list;
 
-    void Tail_movenent(list<int> &tail_list, int head_position);      //tail
-    void tail_increase_size(list<int> &tail_list, int head_position); //tail
-    void draw_snake_tail(string &map, list<int> tail_list);           //tail
+    void Tail_movenent(int head_last_position);      //tail
+    void tail_increase_size(int head_position); //tail
+    void draw_snake_tail(string &map);           //tail
     void move(string &map);
 };
 

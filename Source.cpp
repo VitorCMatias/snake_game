@@ -201,6 +201,11 @@ void Head::move_down(string &map)
     this->wall_shock = detect_shock(MOVE_DOWN);
 }
 
+void Head::get_last_position(){
+    this->head_last_position = this->head_position;
+}
+
+
 int draw_fruit_position(string &map)
 {
     auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
@@ -215,35 +220,35 @@ int draw_fruit_position(string &map)
     return fruit_position;
 }
 
-void Tail::Tail_movenent(list<int> &tail_list, int head_last_position)
+void Tail::Tail_movenent( int head_last_position)
 {
-    if (tail_list.size() == 1)
+    if (this->tail_list.size() == 1)
     {
-        tail_list.push_front(head_last_position);
+        this->tail_list.push_front(head_last_position);
     }
     else
     {
-        tail_list.push_front(head_last_position);
-        tail_list.pop_back();
+        this->tail_list.push_front(head_last_position);
+        this->tail_list.pop_back();
     }
 }
 
-void Tail::tail_increase_size(list<int> &tail_list, int head_position)
+void Tail::tail_increase_size(int head_position)
 {
-    tail_list.push_front(head_position);
+    this->tail_list.push_front(head_position);
 }
 
-void Tail::draw_snake_tail(string &map, list<int> tail_list)
+void Tail::draw_snake_tail(string &map)
 {
-    if (tail_list.size() == 1)
-        map.replace(tail_list.front(), 1, "o");
+    if (this->tail_list.size() == 1)
+        map.replace(this->tail_list.front(), 1, "o");
     else
     {
-        for (int node : tail_list)
+        for (int node : this->tail_list)
         {
             map.replace(node, 1, "o"); //Paramters: Position, Size, Content
         }
-        map.replace(tail_list.back(), 1, " ");
+        map.replace(this->tail_list.back(), 1, " ");
     }
 }
 
@@ -251,7 +256,7 @@ void Tail::move(string &map)
 {
     if (this->tail_list.size() > 0)
     {
-        this->draw_snake_tail(map, this->tail_list);
+        this->draw_snake_tail(map);
         map.replace(this->tail_list.back(), 1, " ");
     }
 }

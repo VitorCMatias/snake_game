@@ -20,6 +20,7 @@ int main()
     int time_position = Map.map.find("%");
     system("cls");
     Map.print();
+    head.get_last_position();
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
@@ -28,7 +29,7 @@ int main()
         if (_kbhit())
             key_pressed = toupper(getch());
 
-        head.head_last_position = head.head_position;
+        head.get_last_position();
 
         switch (key_pressed)
         {
@@ -51,18 +52,17 @@ int main()
         if (head.wall_shock)
             lives--;
         else
-            tail.Tail_movenent(tail.tail_list, head.head_last_position);
+            tail.Tail_movenent( head.head_last_position);
 
         tail.move(Map.map);
 
         if (head.head_position == fruit_position)
         {
-            tail.tail_increase_size(tail.tail_list, head.head_last_position);
+            tail.tail_increase_size(head.head_last_position);
             tail.move(Map.map);
             fruit_position = draw_fruit_position(Map.map);
             score += 10;
         }
-
         Map.print();
         Sleep(difficulty);
         timer.stop();
