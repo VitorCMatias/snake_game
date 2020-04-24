@@ -201,8 +201,6 @@ void Head::move_down(string &map)
     this->wall_shock = detect_shock(MOVE_DOWN);
 }
 
-
-
 int draw_fruit_position(string &map)
 {
     auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
@@ -246,6 +244,15 @@ void Tail::draw_snake_tail(string &map, list<int> tail_list)
             map.replace(node, 1, "o"); //Paramters: Position, Size, Content
         }
         map.replace(tail_list.back(), 1, " ");
+    }
+}
+
+void Tail::move(string &map)
+{
+    if (this->tail_list.size() > 0)
+    {
+        this->draw_snake_tail(map, this->tail_list);
+        map.replace(this->tail_list.back(), 1, " ");
     }
 }
 
