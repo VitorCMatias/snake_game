@@ -41,65 +41,24 @@ int main()
         switch (key_pressed)
         {
         case 'W':
-            //head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
             head.draw_up(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
-
-            /*if (!head.wall_shock)
-                tail.Tail_movenent(tail.tail_list, head.head_last_position);
-
-            if (tail.tail_list.size() > 0)
-            {
-                tail.draw_snake_tail(Map.map, tail.tail_list);
-                Map.map.replace(tail.tail_list.back(), 1, " ");
-            }*/
-
             break;
         case 'A':
-            //head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
             head.draw_left(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
-
-            /*if (!head.wall_shock)
-                tail.Tail_movenent(tail.tail_list, head.head_last_position);
-
-            if (tail.tail_list.size() > 0)
-            {
-                tail.draw_snake_tail(Map.map, tail.tail_list);
-                Map.map.replace(tail.tail_list.back(), 1, " ");
-            }*/
             break;
         case 'S':
-            //head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
             head.draw_down(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
-
-            /*if (!head.wall_shock)
-                tail.Tail_movenent(tail.tail_list, head.head_last_position);
-
-            if (tail.tail_list.size() > 0)
-            {
-                tail.draw_snake_tail(Map.map, tail.tail_list);
-                Map.map.replace(tail.tail_list.back(), 1, " ");
-            }*/
             break;
         case 'D':
-            //head.head_last_position = head.head_position;
             head.wall_position = head.detect_wall(key_pressed);
             head.draw_right(Map.map);
             tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
-
-            /*if (!head.wall_shock)
-                tail.Tail_movenent(tail.tail_list, head.head_last_position);
-
-            if (tail.tail_list.size() > 0)
-            {
-                tail.draw_snake_tail(Map.map, tail.tail_list);
-                Map.map.replace(tail.tail_list.back(), 1, " ");
-            }*/
             break;
 
         default:
@@ -114,6 +73,8 @@ int main()
             tail.draw_snake_tail(Map.map, tail.tail_list);
             Map.map.replace(tail.tail_list.back(), 1, " ");
         }
+
+
 
         if (head.head_position == fruit_position)
         {
