@@ -1,5 +1,20 @@
 #include "head.h"
 
+System::System(/* args */)
+{
+}
+
+System::~System()
+{
+}
+
+int System::generate_ramdom_number()
+{
+    auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
+    mt19937 mt_rand(seed);
+    return mt_rand();
+}
+
 void Timer::start()
 {
     m_StartTime = std::chrono::system_clock::now();
@@ -264,31 +279,45 @@ void print_score(int map_height, int score, int lives)
     cout << "Lives: " << lives << endl;
 }
 
-
-Fruit::Fruit(){
-    this->fruit_position = find_position();
+Fruit::Fruit()
+{
+    this->fruit_position = find_position(canvas);
 }
 
-int Fruit::find_position(){
-    return this->canvas.find('*');
-}
- int Fruit::get_position(){
-     return this->fruit_position;
- }
+int Fruit::find_position(string& map)
+{
+    int fruit_position = this->canvas.find('*');
 
+    if (this->canvas.find('*') == string::npos)
+    {
+        System sys;
+
+        fruit_position = sys.generate_ramdom_number() % this->canvas.length();
+
+        while (canvas.at(fruit_position) != ' ')
+            fruit_position = sys.generate_ramdom_number() % this->canvas.length();
+
+        map.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
+
+    }
+
+    return fruit_position;
+}
+int Fruit::get_position()
+{
+    return this->fruit_position;
+}
 
 void Fruit::draw(string &map)
 {
-    auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
-    mt19937 mt_rand(seed);
-    int fruit_position = mt_rand() % map.length();
+    System sys;
+
+    int fruit_position = sys.generate_ramdom_number() % map.length();
 
     while (map.at(fruit_position) != ' ')
-        fruit_position = mt_rand() % map.length();
+        fruit_position = sys.generate_ramdom_number() % map.length();
 
     map.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
 
     this->fruit_position = fruit_position;
 }
-
-

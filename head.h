@@ -1,13 +1,11 @@
 #include <iostream>
 #include <fstream>
-//#include <algorithm>
 #include <Windows.h>
 #include <conio.h>
 #include <random>
 #include <chrono>
 #include <time.h>
 #include <list>
-// #include <tuple>
 #include <thread>
 
 #define FRUIT '*'
@@ -18,6 +16,15 @@
 #define MOVE_DOWN 'S'
 
 using namespace std;
+
+class System
+{
+private:
+public:
+    System(/* args */);
+    int generate_ramdom_number();
+    ~System();
+};
 
 class Timer
 {
@@ -99,7 +106,7 @@ class Fruit : public Map
 {
 private:
     int fruit_position;
-    int find_position();
+    int find_position(string& map);
 
 public:
     Fruit();

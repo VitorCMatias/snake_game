@@ -12,12 +12,11 @@ int main()
     Fruit fruit;
 
     int lives = 1;
-    //int fruit_position = Map.map.find('*');
     int score = 0;
     int difficulty = 80;
     char key_pressed = 'W';
     float clock = 0;
-
+    
     system("cls");
     Map.print();
     head.set_last_position();
@@ -63,6 +62,8 @@ int main()
             fruit.draw(Map.canvas);
             score += 10;
         }
+
+
         Map.print();
         Sleep(difficulty);
         timer.stop();
