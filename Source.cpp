@@ -68,9 +68,6 @@ void Map::print()
     cout << map << endl;
 }
 
-
-
-
 int Head::find_position()
 {
     return this->map.find('0');
@@ -86,28 +83,18 @@ int Head::detect_wall(char key_pressed)
     return wall_position;
 }
 
-tuple<int, bool> Head::detect_shock(int &lives, char key_pressed)
+bool Head::detect_shock(char key_pressed)
 {
     bool head_hit_wall = false;
     int head_lock_ahead = calculate_next_position(key_pressed);
     if (this->map.at(head_lock_ahead) == 'o')
-    {
         head_hit_wall = false;
-        lives--;
-    }
     else if (this->head_position == this->head_last_position)
-    {
         head_hit_wall = true;
-        lives--;
-    }
-
     if (this->head_position == this->wall_position)
-    {
         head_hit_wall = true;
-        lives--;
-    }
 
-    return make_tuple(lives, head_hit_wall);
+    return head_hit_wall;
 }
 
 int Head::calculate_next_position(char key_pressed)
@@ -180,10 +167,40 @@ void Head::draw_down(string &map)
     }
 }
 
-
-int Head::inform_position(){
+int Head::inform_position()
+{
     return this->head_position;
 }
+
+void Head::move_up(string &map)
+{
+    this->wall_position = detect_wall(MOVE_UP);
+    draw_up(map);
+    this->wall_shock = detect_shock(MOVE_UP);
+}
+
+void Head::move_left(string &map)
+{
+    this->wall_position = detect_wall(MOVE_LEFT);
+    draw_left(map);
+    this->wall_shock = detect_shock(MOVE_LEFT);
+}
+
+void Head::move_right(string &map)
+{
+    this->wall_position = detect_wall(MOVE_RIGHT);
+    draw_right(map);
+    this->wall_shock = detect_shock(MOVE_RIGHT);
+}
+
+void Head::move_down(string &map)
+{
+    this->wall_position = detect_wall(MOVE_DOWN);
+    draw_down(map);
+    this->wall_shock = detect_shock(MOVE_DOWN);
+}
+
+
 
 
 int draw_fruit_position(string &map)
@@ -199,14 +216,6 @@ int draw_fruit_position(string &map)
 
     return fruit_position;
 }
-
-
-
-
-
-
-
-
 
 void Tail::Tail_movenent(list<int> &tail_list, int head_last_position)
 {
@@ -239,7 +248,6 @@ void Tail::draw_snake_tail(string &map, list<int> tail_list)
         map.replace(tail_list.back(), 1, " ");
     }
 }
-
 
 void print_score(int map_height, int score, int lives)
 {

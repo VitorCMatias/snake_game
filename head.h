@@ -12,6 +12,10 @@
 
 #define FRUIT '*'
 #define WALL '#'
+#define MOVE_UP 'W'
+#define MOVE_LEFT 'A'
+#define MOVE_RIGHT 'D'
+#define MOVE_DOWN 'S'
 
 using namespace std;
 
@@ -58,7 +62,7 @@ public:
 
 public:
     int find_position();
-    tuple<int, bool> detect_shock(int &lives, char key_pressed);
+    bool detect_shock(char key_pressed);
     int calculate_next_position(char key_pressed);
     int detect_wall(char key_pressed);
     void draw_left(string &map);
@@ -66,6 +70,10 @@ public:
     void draw_up(string &map);
     void draw_down(string &map);
     int inform_position();
+    void move_up(string &map);
+    void move_left(string &map);
+    void move_right(string &map);
+    void move_down(string &map);
 
 public:
     Head();

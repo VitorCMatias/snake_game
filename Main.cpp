@@ -40,25 +40,17 @@ int main()
 
         switch (key_pressed)
         {
-        case 'W':
-            head.wall_position = head.detect_wall(key_pressed);
-            head.draw_up(Map.map);
-            tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
+        case MOVE_UP:
+            head.move_up(Map.map);
             break;
-        case 'A':
-            head.wall_position = head.detect_wall(key_pressed);
-            head.draw_left(Map.map);
-            tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
+        case MOVE_LEFT:
+            head.move_left(Map.map);
             break;
-        case 'S':
-            head.wall_position = head.detect_wall(key_pressed);
-            head.draw_down(Map.map);
-            tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
+        case MOVE_DOWN:
+            head.move_down(Map.map);
             break;
-        case 'D':
-            head.wall_position = head.detect_wall(key_pressed);
-            head.draw_right(Map.map);
-            tie(lives, head.wall_shock) = head.detect_shock(lives, key_pressed);
+        case MOVE_RIGHT:
+            head.move_right(Map.map);
             break;
 
         default:
@@ -67,14 +59,14 @@ int main()
 
         if (!head.wall_shock)
             tail.Tail_movenent(tail.tail_list, head.head_last_position);
+        else
+            lives--;
 
         if (tail.tail_list.size() > 0)
         {
             tail.draw_snake_tail(Map.map, tail.tail_list);
             Map.map.replace(tail.tail_list.back(), 1, " ");
         }
-
-
 
         if (head.head_position == fruit_position)
         {
