@@ -7,7 +7,7 @@
 #include <chrono>
 #include <time.h>
 #include <list>
-#include <tuple>
+// #include <tuple>
 #include <thread>
 
 #define FRUIT '*'
@@ -86,8 +86,7 @@ public:
 
     void Tail_movenent(list<int> &tail_list, int head_position);      //tail
     void tail_increase_size(list<int> &tail_list, int head_position); //tail
-    void draw_snake_tail(string &map, list<int> tail_list);                //tail
-    
+    void draw_snake_tail(string &map, list<int> tail_list);           //tail
 };
 
 int draw_fruit_position(string &map); //fruit

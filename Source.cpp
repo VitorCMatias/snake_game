@@ -128,6 +128,7 @@ Head::Head()
 {
     this->head_position = find_position();
     this->wall_shock = false;
+    this->head_last_position = this->head_position;
 }
 
 void Head::draw_left(string &map)
@@ -199,7 +200,6 @@ void Head::move_down(string &map)
     draw_down(map);
     this->wall_shock = detect_shock(MOVE_DOWN);
 }
-
 
 
 

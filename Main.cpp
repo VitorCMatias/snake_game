@@ -9,26 +9,18 @@ int main()
     Map Map;
     Head head;
     Tail tail;
-    //string Map = get_file_content("Map.txt");
-    //int map_height = calculate_map_height(Map);
-    //int map_width = calculate_map_width(Map);
-    //int head_position = find_head_position(Map.map);
+
     int lives = 1;
     int fruit_position = Map.map.find('*');
     int score = 0;
     int difficulty = 80;
-    //int old_head_position;
-    //list<int> tail_list;
-    //bool wall_shock = false;
     char key_pressed = 'W';
     char old_ch;
     float aux = 0;
-    //int wall_position;
     int time_position = Map.map.find("%");
     system("cls");
     Map.print();
-    head.head_last_position = head.head_position;
-    //old_head_position = head_position;
+
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         timer.start();
@@ -52,15 +44,14 @@ int main()
         case MOVE_RIGHT:
             head.move_right(Map.map);
             break;
-
         default:
             break;
         }
 
-        if (!head.wall_shock)
-            tail.Tail_movenent(tail.tail_list, head.head_last_position);
-        else
+        if (head.wall_shock)
             lives--;
+        else
+            tail.Tail_movenent(tail.tail_list, head.head_last_position);
 
         if (tail.tail_list.size() > 0)
         {
@@ -80,15 +71,8 @@ int main()
         Sleep(difficulty);
         timer.stop();
         aux = aux + timer.elapsedMilliseconds();
-        for (int i : tail.tail_list)
-            printf("%d\t", i);
-        printf("\n");
-        printf("hp: %d hlp: %d\n", head.head_position, head.head_last_position);
-        printf("Size: %d\n", tail.tail_list.size());
         printf("Score: %d\n", score);
         printf("%0.1f\n", aux / 1000.0);
-
-        //print_score(map_height, score, lives);
     }
 
     cout << "You are dead!";
