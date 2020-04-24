@@ -20,7 +20,7 @@ int main()
     int time_position = Map.map.find("%");
     system("cls");
     Map.print();
-    head.get_last_position();
+    head.set_last_position();
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
@@ -29,7 +29,7 @@ int main()
         if (_kbhit())
             key_pressed = toupper(getch());
 
-        head.get_last_position();
+        head.set_last_position();
 
         switch (key_pressed)
         {

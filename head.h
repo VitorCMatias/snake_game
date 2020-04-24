@@ -62,20 +62,20 @@ private:
     int wall_position;
 
 private:
-    int find_position();                           //priv
-    bool detect_shock(char key_pressed);           //priv
-    int calculate_next_position(char key_pressed); //priv
-    int detect_wall(char key_pressed);             //priv
-    void draw_left(string &map);                   //priv
-    void draw_right(string &map);                  //priv
-    void draw_up(string &map);                     //priv
-    void draw_down(string &map);                   //priv
+    int find_position();                           
+    bool detect_shock(char key_pressed);           
+    int calculate_next_position(char key_pressed); 
+    int detect_wall(char key_pressed);             
+    void draw_left(string &map);                   
+    void draw_right(string &map);                  
+    void draw_up(string &map);                     
+    void draw_down(string &map);                   
 public:
     bool wall_shock;
 
 public:
     Head();
-    void get_last_position();
+    void set_last_position();
     int inform_position();
     void move_up(string &map);
     void move_left(string &map);
