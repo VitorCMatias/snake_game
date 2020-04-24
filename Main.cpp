@@ -9,9 +9,10 @@ int main()
     Map Map;
     Head head;
     Tail tail;
+    Fruit fruit;
 
     int lives = 1;
-    int fruit_position = Map.map.find('*');
+    //int fruit_position = Map.map.find('*');
     int score = 0;
     int difficulty = 80;
     char key_pressed = 'W';
@@ -55,11 +56,11 @@ int main()
 
         tail.move(Map.map);
 
-        if (head.get_position() == fruit_position)
+        if (head.get_position() == fruit.get_position())
         {
             tail.tail_increase_size(head.get_last_position());
             tail.move(Map.map);
-            fruit_position = draw_fruit_position(Map.map);
+            fruit.draw(Map.map);
             score += 10;
         }
         Map.print();
