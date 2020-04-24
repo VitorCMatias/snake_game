@@ -47,17 +47,17 @@ string Map::get_file_content(const string path)
 
 int Map::calculate_width()
 {
-    return (map.find('\n') + 1);
+    return (canvas.find('\n') + 1);
 }
 
 int Map::calculate_height()
 {
-    return (map.size() / width) + 1;
+    return (canvas.size() / width) + 1;
 }
 
 Map::Map()
 {
-    this->map = get_file_content("Map.txt");
+    this->canvas = get_file_content("Map.txt");
     this->width = calculate_width();
     this->height = calculate_height();
 }
@@ -65,18 +65,18 @@ Map::Map()
 void Map::print()
 {
     gotoxy(0, 0);
-    cout << map << endl;
+    cout << canvas << endl;
 }
 
 int Head::find_position()
 {
-    return this->map.find('0');
+    return this->canvas.find('0');
 }
 int Head::detect_wall(char key_pressed)
 {
     int wall_position = 0;
     int head_lock_ahead = calculate_next_position(key_pressed);
-    if (this->map.at(head_lock_ahead) == '#')
+    if (this->canvas.at(head_lock_ahead) == '#')
     {
         wall_position = head_lock_ahead;
     }
@@ -87,7 +87,7 @@ bool Head::detect_shock(char key_pressed)
 {
     bool head_hit_wall = false;
     int head_lock_ahead = calculate_next_position(key_pressed);
-    if (this->map.at(head_lock_ahead) == 'o')
+    if (this->canvas.at(head_lock_ahead) == 'o')
         head_hit_wall = false;
     else if (this->head_position == this->head_last_position)
         head_hit_wall = true;
@@ -270,7 +270,7 @@ Fruit::Fruit(){
 }
 
 int Fruit::find_position(){
-    return this->map.find('*');
+    return this->canvas.find('*');
 }
  int Fruit::get_position(){
      return this->fruit_position;

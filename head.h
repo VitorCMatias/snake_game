@@ -36,7 +36,7 @@ class Map
 {
     //protected:
 public:
-    string map;
+    string canvas;
     int width;
     int height;
 
@@ -95,16 +95,16 @@ public:
     void move(string &map);
 };
 
-class Fruit: public Map{
-    private:
+class Fruit : public Map
+{
+private:
     int fruit_position;
     int find_position();
-    public:
+
+public:
     Fruit();
     int get_position();
-    void draw(string &map); 
+    void draw(string &map);
 };
-
-
 
 void print_score(int map_height, int score, int lives);

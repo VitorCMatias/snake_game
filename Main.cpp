@@ -34,16 +34,16 @@ int main()
         switch (key_pressed)
         {
         case MOVE_UP:
-            head.move_up(Map.map);
+            head.move_up(Map.canvas);
             break;
         case MOVE_LEFT:
-            head.move_left(Map.map);
+            head.move_left(Map.canvas);
             break;
         case MOVE_DOWN:
-            head.move_down(Map.map);
+            head.move_down(Map.canvas);
             break;
         case MOVE_RIGHT:
-            head.move_right(Map.map);
+            head.move_right(Map.canvas);
             break;
         default:
             break;
@@ -54,13 +54,13 @@ int main()
         else
             tail.Tail_movenent( head.get_last_position());
 
-        tail.move(Map.map);
+        tail.move(Map.canvas);
 
         if (head.get_position() == fruit.get_position())
         {
             tail.tail_increase_size(head.get_last_position());
-            tail.move(Map.map);
-            fruit.draw(Map.map);
+            tail.move(Map.canvas);
+            fruit.draw(Map.canvas);
             score += 10;
         }
         Map.print();
