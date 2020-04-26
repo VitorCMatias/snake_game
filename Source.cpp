@@ -281,7 +281,8 @@ void print_information(int map_height, int map_width, int lives, int score, floa
     if (score < 100)
         gotoxy(26, map_height + 1);
     else
-        gotoxy(27, map_height + 1);
+        gotoxy(26 - (calculate_digits(score) - 3), map_height + 1);
+
     printf("%d", score);
 
     gotoxy(map_width - 8, map_height);
@@ -290,5 +291,28 @@ void print_information(int map_height, int map_width, int lives, int score, floa
     if (timer < 100.0)
         printf("%0.1f", timer);
     else
-        printf("%0.0f", timer);
+        printf("%d", int(timer));
+}
+
+void show_consol_cursor(bool showFlag)
+{
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_CURSOR_INFO cursorInfo;
+
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = showFlag; // set the cursor visibility
+    SetConsoleCursorInfo(out, &cursorInfo);
+}
+
+int calculate_digits(int val)
+{
+    int i = 0;
+    while (val)
+    {
+        val = val / 10;
+        i++;
+    }
+
+    return i;
 }

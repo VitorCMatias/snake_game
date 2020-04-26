@@ -3,7 +3,7 @@
 // g++ -std=c++11 head.h Source.cpp Main.cpp -o m
 
 int main()
-{
+{   
     Timer timer;
     string Map = get_file_content("Map.txt");
     int map_height = calculate_map_height(Map);
@@ -24,6 +24,9 @@ int main()
     system("cls");
     print(Map);
     old_head_position = head_position;
+
+    show_consol_cursor(false);
+    //SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         timer.start();

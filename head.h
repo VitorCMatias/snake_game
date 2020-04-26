@@ -9,7 +9,6 @@
 #include <list>
 #include <tuple>
 #include <thread>
-
 #define FRUIT '*'
 #define WALL '#'
 
@@ -58,3 +57,6 @@ void display_list(list<int> l);
 void print_score(int map_height, int score, int lives);
 
 void print_information(int map_height, int map_width, int lives,int score,float timer);
+
+void show_consol_cursor(bool showFlag);
+int calculate_digits(int val);
