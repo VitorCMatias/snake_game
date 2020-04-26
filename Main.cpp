@@ -10,17 +10,26 @@ int main()
     Head head;
     Tail tail;
     Fruit fruit;
+    System sys;
 
     int lives = 1;
     int score = 0;
     int difficulty = 80;
     char key_pressed = 'W';
     float clock = 0;
-    
+    sys.show_consol_cursor(false);
     system("cls");
-    Map.print();
+    //Map.print();
     head.set_last_position();
 
+    /*HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h, FOREGROUND_GREEN);
+    printf("Score:");*/
+
+    /*SetConsoleTextAttribute(h, FOREGROUND_RED);
+    printf("Score:");*/
+    
+    
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         timer.start();

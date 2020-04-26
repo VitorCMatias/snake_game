@@ -1,5 +1,10 @@
 #include "head.h"
 
+
+
+
+
+
 System::System(/* args */)
 {
 }
@@ -7,6 +12,20 @@ System::System(/* args */)
 System::~System()
 {
 }
+
+void System::show_consol_cursor(bool showFlag)
+{
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_CURSOR_INFO cursorInfo;
+
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = showFlag; // set the cursor visibility
+    SetConsoleCursorInfo(out, &cursorInfo);
+}
+
+
+
 
 int System::generate_ramdom_number()
 {

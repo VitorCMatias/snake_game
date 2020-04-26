@@ -17,12 +17,11 @@
 
 using namespace std;
 
-class System
+struct System
 {
-private:
-public:
     System(/* args */);
     int generate_ramdom_number();
+    void show_consol_cursor(bool showFlag);
     ~System();
 };
 
@@ -41,13 +40,15 @@ private:
 
 class Map
 {
-    //protected:
+
 public:
     string canvas;
+protected:
     int width;
     int height;
 
 private:
+
     int calculate_width();
     int calculate_height();
     string get_file_content(const string path);
