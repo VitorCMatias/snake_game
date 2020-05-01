@@ -7,6 +7,7 @@
 #include <time.h>
 #include <list>
 #include <thread>
+#include<map>
 //#include <graphics.h>
 
 
@@ -39,6 +40,7 @@ private:
     std::chrono::time_point<std::chrono::system_clock> m_EndTime;
     bool m_bRunning = false;
 };
+
 
 class Map
 {
@@ -127,3 +129,17 @@ public:
 };
 
 void print_score(int map_height, int score, int lives);
+
+class Score{
+    public:
+    int points;
+    
+    map<string, int> records;
+
+    //set_records(string name, int points)
+
+
+
+    
+
+};

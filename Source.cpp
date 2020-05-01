@@ -24,9 +24,6 @@ void System::show_consol_cursor(bool showFlag)
     SetConsoleCursorInfo(out, &cursorInfo);
 }
 
-
-
-
 int System::generate_ramdom_number()
 {
     auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
@@ -112,6 +109,7 @@ int Head::find_position()
 {
     return canvas.find('0');
 }
+
 int Head::detect_wall(char key_pressed)
 {
     int wall_position = 0;
@@ -215,3 +213,6 @@ void Fruit::draw(string &map)
 
     this->fruit_position = fruit_position;
 }
+
+
+

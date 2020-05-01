@@ -1,5 +1,13 @@
 #include "header.h"
 
+Head::Head()
+{
+    this->head_position = find_position();
+    this->wall_shock = false;
+    this->head_last_position = this->head_position;
+}
+
+
 int Head::calculate_next_position(char key_pressed)
 {
 
@@ -8,16 +16,16 @@ int Head::calculate_next_position(char key_pressed)
     switch (key_pressed)
     {
     case 'W':
-        head_next_position = this->head_position - this->width;
+        head_next_position = head_position - width;
         break;
     case 'A':
-        head_next_position = this->head_position - 1;
+        head_next_position = head_position - 1;
         break;
     case 'S':
-        head_next_position = this->head_position + this->width;
+        head_next_position = head_position + width;
         break;
     case 'D':
-        head_next_position = this->head_position + 1;
+        head_next_position = head_position + 1;
         break;
 
     default:
@@ -27,12 +35,7 @@ int Head::calculate_next_position(char key_pressed)
     return head_next_position;
 }
 
-Head::Head()
-{
-    this->head_position = find_position();
-    this->wall_shock = false;
-    this->head_last_position = this->head_position;
-}
+
 
 void Head::draw_left(string* map)
 {
