@@ -96,10 +96,10 @@ Map::Map()
     this->height = calculate_height();
 }
 
-void Map::print(string_view map)
+void Map::print()
 {
     gotoxy(0, 0);
-    cout << map << endl;
+    cout << canvas << endl;
 }
 
 
@@ -110,13 +110,13 @@ bool Head::hit(){
 }
 int Head::find_position()
 {
-    return this->canvas.find('0');
+    return canvas.find('0');
 }
 int Head::detect_wall(char key_pressed)
 {
     int wall_position = 0;
     int head_lock_ahead = calculate_next_position(key_pressed);
-    if (this->canvas.at(head_lock_ahead) == '#')
+    if (canvas.at(head_lock_ahead) == '#')
     {
         wall_position = head_lock_ahead;
     }
@@ -127,7 +127,7 @@ int Head::detect_tail(char key_pressed)
 {
     int tail_position = 0;
     int head_lock_ahead = calculate_next_position(key_pressed);
-    if (this->canvas.at(head_lock_ahead) == 'o')
+    if (canvas.at(head_lock_ahead) == 'o')
     {
         tail_position = head_lock_ahead;
     }
@@ -180,16 +180,16 @@ Fruit::Fruit()
 
 int Fruit::find_position(string& map)
 {
-    int fruit_position = this->canvas.find('*');
+    int fruit_position = canvas.find('*');
 
-    if (this->canvas.find('*') == string::npos)
+    if (canvas.find('*') == string::npos)
     {
         System sys;
 
-        fruit_position = sys.generate_ramdom_number() % this->canvas.length();
+        fruit_position = sys.generate_ramdom_number() % canvas.length();
 
         while (canvas.at(fruit_position) != ' ')
-            fruit_position = sys.generate_ramdom_number() % this->canvas.length();
+            fruit_position = sys.generate_ramdom_number() % canvas.length();
 
         map.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
 

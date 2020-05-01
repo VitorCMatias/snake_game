@@ -56,7 +56,7 @@ private:
     string get_file_content(const string path);
 
 public:
-    void print(string_view map);
+    void print();
     Map();
 
     //private:

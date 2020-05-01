@@ -1,6 +1,19 @@
-#include "head.h"
+#include "header.h"
 
-//g++ -O2 -std=c++11 head.h Source.cpp Main.cpp  -o m
+
+//g++ -O2 -std=c++17 header.h Source.cpp Main.cpp  -o m
+//g++ -std=c++17 header.h Snake.cpp Source.cpp Main.cpp -o m
+
+
+static uint32_t s_AllocCount = 0;
+
+void *operator new(size_t size)
+{
+    s_AllocCount++;
+    cout << "\nAlocating " << size << "bytes\n";
+
+    return malloc(size);
+}
 
 int main()
 {
@@ -19,7 +32,7 @@ int main()
     float clock = 0;
     sys.show_consol_cursor(false);
     system("cls");
-    //Map.print();
+    Map.print();
     head.set_last_position();
 
     /*HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -28,8 +41,8 @@ int main()
 
     /*SetConsoleTextAttribute(h, FOREGROUND_RED);
     printf("Score:");*/
-    
-    
+    //setfontcolor(RED);
+
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         timer.start();
@@ -42,25 +55,25 @@ int main()
         switch (key_pressed)
         {
         case MOVE_UP:
-            head.move_up(Map.canvas);
+            head.move_up(&Map.canvas);
             break;
         case MOVE_LEFT:
-            head.move_left(Map.canvas);
+            head.move_left(&Map.canvas);
             break;
         case MOVE_DOWN:
-            head.move_down(Map.canvas);
+            head.move_down(&Map.canvas);
             break;
         case MOVE_RIGHT:
-            head.move_right(Map.canvas);
+            head.move_right(&Map.canvas);
             break;
         default:
             break;
         }
 
-        if (head.wall_shock)
+        if (head.hit())
             lives--;
         else
-            tail.Tail_movenent( head.get_last_position());
+            tail.Tail_movenent(head.get_last_position());
 
         tail.move(Map.canvas);
 
@@ -71,17 +84,17 @@ int main()
             fruit.draw(Map.canvas);
             score += 10;
         }
-
-
+    
         Map.print();
         Sleep(difficulty);
         timer.stop();
         clock = clock + timer.elapsedMilliseconds();
         printf("Score: %d\n", score);
         printf("%0.1f\n", clock / 1000.0);
+        //cout<<"\n"<<s_AllocCount<<" allocations";
     }
 
     system("cls");
-
+    cout<<s_AllocCount<<" allocations";
     return 0;
 }
