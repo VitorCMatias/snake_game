@@ -60,7 +60,7 @@ void Head::draw_up(string* map)
     if (head_position / width > 1 && head_position - width != wall_position)
     {
         map->replace(this->head_position, 1, " "); //Paramters: Position, Size, Content
-        this->head_position = this->head_position - this->width;
+        this->head_position = head_position - this->width;
         map->replace(this->head_position, 1, "0"); //Paramters: Position, Size, Content
     }
 }
@@ -76,7 +76,7 @@ void Head::draw_down(string* map)
 
 int Head::inform_position()
 {
-    return this->head_position;
+    return head_position;
 }
 
 void Head::move_up(string* map)
@@ -110,21 +110,21 @@ void Head::move_down(string* map)
 
 void Head::set_last_position()
 {
-    this->head_last_position = this->head_position;
+    this->head_last_position = head_position;
 }
 
 int Head::get_last_position()
 {
-    return this->head_last_position;
+    return head_last_position;
 }
 int Head::get_position()
 {
-    return this->head_position;
+    return head_position;
 }
 
 void Tail::Tail_movenent(int head_last_position)
 {
-    if (this->tail_list.size() == 1)
+    if (tail_list.size() == 1)
     {
         this->tail_list.push_front(head_last_position);
     }
@@ -142,11 +142,11 @@ void Tail::tail_increase_size(int head_last_position)
 
 void Tail::draw_snake_tail(string &map)
 {
-    if (this->tail_list.size() == 1)
+    if (tail_list.size() == 1)
         map.replace(this->tail_list.front(), 1, "o");
     else
     {
-        for (int node : this->tail_list)
+        for (int node : tail_list)
         {
             map.replace(node, 1, "o"); //Paramters: Position, Size, Content
         }
