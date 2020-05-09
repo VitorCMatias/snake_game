@@ -4,7 +4,6 @@
 #include <conio.h>
 #include <random>
 #include <chrono>
-//#include <time.h>
 #include <list>
 #include <thread>
 
@@ -31,15 +30,22 @@ struct System
 
 class Timer
 {
-public:
-    void start();
-    void stop();
-    double elapsedMilliseconds();
-
 private:
     std::chrono::time_point<std::chrono::system_clock> m_StartTime;
     std::chrono::time_point<std::chrono::system_clock> m_EndTime;
     bool m_bRunning = false;
+    double clock;
+
+private:
+    
+    void stop();
+    double elapsedMilliseconds();
+
+public:
+    void start();
+    void update();
+    void print();
+    Timer();
 };
 
 /*
@@ -168,7 +174,6 @@ private:
     void internal_draw();
     void internal_move();
 };
-
 
 class Fruit
 {

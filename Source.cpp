@@ -40,6 +40,10 @@ int System::generate_ramdom_number()
     return mt_rand();
 }
 
+Timer::Timer(){
+    this->clock = 0;
+}
+
 void Timer::start()
 {
     m_StartTime = std::chrono::system_clock::now();
@@ -62,6 +66,17 @@ double Timer::elapsedMilliseconds()
         endTime = m_EndTime;
 
     return std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_StartTime).count();
+}
+
+void Timer::update()
+{
+    stop();
+    clock = clock + elapsedMilliseconds();
+}
+
+void Timer::print()
+{
+    printf("%0.1f\n", clock / 1000.0);
 }
 
 void gotoxy(short x, short y)
