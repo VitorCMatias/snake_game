@@ -1,38 +1,37 @@
-#include "head.h"
+#include "header.h"
 
 //g++ -O2 -std=c++11 head.h Source.cpp Main.cpp  -o m
 
 int main()
 {
-
     Timer timer;
-    Map Map;
-    Head head;
-    Tail tail;
-    Fruit fruit;
+    
+    
+    
+    //Fruit fruit;
+   
     System sys;
-
+    Map::canvas = sys.get_file_content("Map.txt");
+    Head head;
+    
+    //Tail tail;
     int lives = 1;
     int score = 0;
     int difficulty = 80;
-    char key_pressed = 'W';
-    float clock = 0;
-    sys.show_consol_cursor(false);
-    system("cls");
-    //Map.print();
-    head.set_last_position();
+    char key_pressed = MOVE_UP;
+    //float clock = 0;
+     //Snake s;
 
-    /*HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(h, FOREGROUND_GREEN);
-    printf("Score:");*/
+    //sys.show_consol_cursor(false);
+    Map::canvas = sys.get_file_content("Map.txt");
+    Map::print();
+    //system("cls");
+    //head.set_last_position();
 
-    /*SetConsoleTextAttribute(h, FOREGROUND_RED);
-    printf("Score:");*/
-    
-    
+
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
-        timer.start();
+       timer.start();
 
         if (_kbhit())
             key_pressed = toupper(getch());
@@ -42,43 +41,45 @@ int main()
         switch (key_pressed)
         {
         case MOVE_UP:
-            head.move_up(Map.canvas);
+            head.move_up();
             break;
         case MOVE_LEFT:
-            head.move_left(Map.canvas);
+            head.move_left();
             break;
         case MOVE_DOWN:
-            head.move_down(Map.canvas);
+            head.move_down();
             break;
         case MOVE_RIGHT:
-            head.move_right(Map.canvas);
+            head.move_right();
             break;
         default:
             break;
         }
+        Sleep(difficulty);
+        Map::print();
 
-        if (head.wall_shock)
+        /*if (head.wall_shock)
             lives--;
         else
             tail.Tail_movenent( head.get_last_position());
 
-        tail.move(Map.canvas);
+        tail.move(Map::canvas);
 
         if (head.get_position() == fruit.get_position())
         {
             tail.tail_increase_size(head.get_last_position());
-            tail.move(Map.canvas);
-            fruit.draw(Map.canvas);
+            tail.move(Map::canvas);
+            fruit.draw(Map::canvas);
             score += 10;
         }
 
 
         Map.print();
         Sleep(difficulty);
-        timer.stop();
-        clock = clock + timer.elapsedMilliseconds();
-        printf("Score: %d\n", score);
-        printf("%0.1f\n", clock / 1000.0);
+        //timer.stop();
+        //clock = clock + timer.elapsedMilliseconds();
+        //printf("Score: %d\n", score);
+        //printf("%0.1f\n", clock / 1000.0);*/
     }
 
     system("cls");

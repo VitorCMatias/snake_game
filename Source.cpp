@@ -1,10 +1,5 @@
 #include "header.h"
 
-
-
-
-
-
 System::System(/* args */)
 {
 }
@@ -24,8 +19,19 @@ void System::show_consol_cursor(bool showFlag)
     SetConsoleCursorInfo(out, &cursorInfo);
 }
 
+string System::get_file_content(const string path)
+{
+    /*
+	    Utiliza um iterator - ponteiros para enderecos de memoria- para construir uma string com os dados da ifstream - input file stream.
+		- istreambuf_iterator<char>(file)) = iterator para o inicio do arquivo
+		- istreambuf_iterator<char>() = iterator para o final do arquivo
+	*/
 
+    ifstream file("Map.txt"); // Ponteiro para o local do arquivo
+    string content((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 
+    return content;
+}
 
 int System::generate_ramdom_number()
 {
@@ -65,105 +71,20 @@ void gotoxy(short x, short y)
     SetConsoleCursorPosition(output, pos);
 }
 
-string Map::get_file_content(const string path)
+string Map::canvas /*{" "}*/;
+Map::Map() : width(calculate_width()), height(calculate_height()) {}
+int Map::calculate_width() { return (canvas.find('\n') + 1); }
+int Map::calculate_height() { return (canvas.size() / width) + 1; }
+int Map::internal_get_width() { return width; }
+int Map::internal_get_height() { return height; }
+
+
+void Map::internal_print()
 {
-    /*
-	    Utiliza um iterator - ponteiros para enderecos de memoria- para construir uma string com os dados da ifstream - input file stream.
-		- istreambuf_iterator<char>(file)) = iterator para o inicio do arquivo
-		- istreambuf_iterator<char>() = iterator para o final do arquivo
-	*/
 
-    ifstream file("Map.txt"); // Ponteiro para o local do arquivo
-    string content((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
-
-    return content;
-}
-
-int Map::calculate_width()
-{
-    return (canvas.find('\n') + 1);
-}
-
-int Map::calculate_height()
-{
-    return (canvas.size() / width) + 1;
-}
-
-Map::Map()
-{
-    this->canvas = get_file_content("Map.txt");
-    this->width = calculate_width();
-    this->height = calculate_height();
-}
-
-void Map::print(string_view map)
-{
     gotoxy(0, 0);
-    cout << map << endl;
+    cout << Map::canvas << "\n";
 }
-
-
-
-bool Head::hit(){
-    return this->wall_shock;
-
-}
-int Head::find_position()
-{
-    return this->canvas.find('0');
-}
-int Head::detect_wall(char key_pressed)
-{
-    int wall_position = 0;
-    int head_lock_ahead = calculate_next_position(key_pressed);
-    if (this->canvas.at(head_lock_ahead) == '#')
-    {
-        wall_position = head_lock_ahead;
-    }
-    return wall_position;
-}
-
-int Head::detect_tail(char key_pressed)
-{
-    int tail_position = 0;
-    int head_lock_ahead = calculate_next_position(key_pressed);
-    if (this->canvas.at(head_lock_ahead) == 'o')
-    {
-        tail_position = head_lock_ahead;
-    }
-    return tail_position;
-}
-
-
-
-
-bool Head::detect_shock(char key_pressed)
-{
-    bool head_hit_tail = false;
-    bool head_hit_wall = false;
-    int head_lock_ahead = calculate_next_position(key_pressed);
-
-    /*for(int tail_node : this->tail_list){
-        if(tail_node == this->head_position)
-        {
-            head_hit_tail = true;
-        }
-    }*/
-
-    if (this->head_position == this->tail_position){
-        head_hit_tail = true;
-        
-    }
-        
-    else if (this->head_position == this->head_last_position)
-        head_hit_wall = true;
-    if (this->head_position == this->wall_position)
-        head_hit_wall = true;
-
-    return head_hit_wall||head_hit_tail;
-}
-
-
 
 void print_score(int map_height, int score, int lives)
 {
@@ -175,24 +96,24 @@ void print_score(int map_height, int score, int lives)
 
 Fruit::Fruit()
 {
-    this->fruit_position = find_position(canvas);
+    this->fruit_position = find_position();
 }
 
-int Fruit::find_position(string& map)
+int Fruit::find_position()
 {
-    int fruit_position = this->canvas.find('*');
+    //string canvas = "*";
+    int fruit_position = Map::canvas.find('*');
 
-    if (this->canvas.find('*') == string::npos)
+    if (Map::canvas.find('*') == string::npos)
     {
         System sys;
 
-        fruit_position = sys.generate_ramdom_number() % this->canvas.length();
+        fruit_position = sys.generate_ramdom_number() % Map::canvas.length();
 
-        while (canvas.at(fruit_position) != ' ')
-            fruit_position = sys.generate_ramdom_number() % this->canvas.length();
+        while (Map::canvas.at(fruit_position) != ' ')
+            fruit_position = sys.generate_ramdom_number() % Map::canvas.length();
 
-        map.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
-
+        Map::canvas.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
     }
 
     return fruit_position;
