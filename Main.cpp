@@ -23,7 +23,7 @@ int main()
         timer.start();
 
         if (_kbhit())
-            key_pressed = toupper(getch());
+            key_pressed = toupper(_getch());
 
         switch (key_pressed)
         {
