@@ -7,7 +7,6 @@
 #include <time.h>
 #include <list>
 #include <thread>
-//#include <graphics.h>
 
 #define FRUIT '*'
 #define WALL '#'
@@ -95,31 +94,6 @@ private:
     void internal_print();
 };
 
-/*class Map
-{
-
-public:
-    static string canvas;
-
-protected:
-    const int width;
-    const int height;
-
-    //private:
-public:
-    int get_width();
-    int get_height();
-    int calculate_width();
-    int calculate_height();
-    //string get_file_content(const string path);
-
-public:
-    void print();
-    Map();
-
-    //private:
-};
-*/
 class Snake
 {
 public:
@@ -128,6 +102,51 @@ public:
     Tail tail;*/
 };
 
+class Head
+{
+private:
+    int head_position;
+    int head_last_position;
+    int wall_position;
+    int tail_position;
+    bool wall_shock;
+
+public:
+    Head(const Head &) = delete;
+    static Head &get_instance()
+    {
+        static Head instance;
+        return instance;
+    }
+    static auto move_up() { return get_instance().internal_move_up(); }
+    static auto move_left() { return get_instance().internal_move_left(); }
+    static auto move_right() { return get_instance().internal_move_right(); }
+    static auto move_down() { return get_instance().internal_move_down(); }
+    static int get_last_position() { return get_instance().internal_get_last_position(); }
+    static int get_position() { return get_instance().internal_get_position(); }
+    static bool hit() { return get_instance().internal_hit(); }
+
+private:
+    void internal_move_up();
+    void internal_move_left();
+    void internal_move_right();
+    void internal_move_down();
+    int internal_get_last_position();
+    int internal_get_position();
+    bool internal_hit();
+
+    Head();
+    int find_position();
+    bool detect_shock(char key_pressed);
+    int calculate_next_position(char key_pressed);
+    int detect_wall(char key_pressed);
+    int detect_tail(char key_pressed);
+    void draw_left();
+    void draw_right();
+    void draw_up();
+    void draw_down();
+};
+/*
 class Head
 {
 private:
@@ -160,6 +179,7 @@ public:
     int get_position();
     bool hit();
 };
+*/
 
 class Tail /*: public Head*/
 {

@@ -7,7 +7,6 @@ int main()
     Timer timer;
     System sys;
     Map::canvas = sys.get_file_content("Map.txt");
-    Head head;
     Fruit fruit;
     Tail tail;
     int lives = 1;
@@ -28,36 +27,34 @@ int main()
         if (_kbhit())
             key_pressed = toupper(getch());
 
-        head.set_last_position();
-
         switch (key_pressed)
         {
         case MOVE_UP:
-            head.move_up();
+            Head::move_up();
             break;
         case MOVE_LEFT:
-            head.move_left();
+            Head::move_left();
             break;
         case MOVE_DOWN:
-            head.move_down();
+            Head::move_down();
             break;
         case MOVE_RIGHT:
-            head.move_right();
+            Head::move_right();
             break;
         default:
             break;
         }
 
-        if (head.wall_shock)
+        if (Head::hit())
             lives--;
         else
-            tail.Tail_movenent(head.get_last_position());
+            tail.Tail_movenent(Head::get_last_position());
 
         tail.move(Map::canvas);
 
-        if (head.get_position() == fruit.get_position())
+        if (Head::get_position() == fruit.get_position())
         {
-            tail.tail_increase_size(head.get_last_position());
+            tail.tail_increase_size(Head::get_last_position());
             tail.move(Map::canvas);
             fruit.draw(Map::canvas);
             score += 10;
