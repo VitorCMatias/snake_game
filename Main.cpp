@@ -17,21 +17,19 @@ void *operator new(size_t size)
 
 int main()
 {
-
     Timer timer;
-    Map Map;
-    Head head;
-    Tail tail;
-    Fruit fruit;
     System sys;
-
+    Map::canvas = sys.get_file_content("Map.txt");
+    Fruit fruit;
     int lives = 1;
     int score = 0;
     int difficulty = 80;
-    char key_pressed = 'W';
+    char key_pressed = MOVE_UP;
     float clock = 0;
+
     sys.show_consol_cursor(false);
     system("cls");
+<<<<<<< HEAD
     Map.print();
     head.set_last_position();
 
@@ -43,18 +41,21 @@ int main()
     printf("Score:");*/
     //setfontcolor(RED);
 
+=======
+    Map::print();
+
+>>>>>>> Use_static_members
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         timer.start();
 
         if (_kbhit())
-            key_pressed = toupper(getch());
-
-        head.set_last_position();
+            key_pressed = toupper(_getch());
 
         switch (key_pressed)
         {
         case MOVE_UP:
+<<<<<<< HEAD
             head.move_up(&Map.canvas);
             break;
         case MOVE_LEFT:
@@ -65,28 +66,56 @@ int main()
             break;
         case MOVE_RIGHT:
             head.move_right(&Map.canvas);
+=======
+            Head::move_up();
+            break;
+        case MOVE_LEFT:
+            Head::move_left();
+            break;
+        case MOVE_DOWN:
+            Head::move_down();
+            break;
+        case MOVE_RIGHT:
+            Head::move_right();
+>>>>>>> Use_static_members
             break;
         default:
             break;
         }
 
+<<<<<<< HEAD
         if (head.hit())
             lives--;
         else
             tail.Tail_movenent(head.get_last_position());
 
         tail.move(Map.canvas);
-
-        if (head.get_position() == fruit.get_position())
+=======
+        if (Head::hit())
+            lives--;
+        else
         {
-            tail.tail_increase_size(head.get_last_position());
-            tail.move(Map.canvas);
-            fruit.draw(Map.canvas);
+            Tail::update_position();
+            Tail::move();
+        }
+>>>>>>> Use_static_members
+
+        if (Head::get_position() == fruit.get_position())
+        {
+            Tail::increase_size();
+            Tail::move();
+            fruit.draw(Map::canvas);
             score += 10;
         }
+<<<<<<< HEAD
     
         Map.print();
+=======
+
+>>>>>>> Use_static_members
         Sleep(difficulty);
+        Map::print();
+
         timer.stop();
         clock = clock + timer.elapsedMilliseconds();
         printf("Score: %d\n", score);
