@@ -35,11 +35,6 @@ int Head::calculate_next_position(char key_pressed)
     return head_next_position;
 }
 
-void Snake::mtr(int v)
-{
-    Map::canvas.replace(v, 1, "9");
-}
-
 int Head::find_position()
 {
     return Map::canvas.find('0');
@@ -188,8 +183,10 @@ bool Head::internal_hit()
     return wall_shock;
 }
 
-void Tail::Tail_movenent(int head_last_position)
+void Tail::internal_Tail_movenent()
 {
+    int head_last_position = Head::get_last_position();
+
     if (this->tail_list.size() == 1)
     {
         this->tail_list.push_front(head_last_position);
@@ -201,32 +198,31 @@ void Tail::Tail_movenent(int head_last_position)
     }
 }
 
-void Tail::tail_increase_size(int head_last_position)
+void Tail::internal_tail_increase_size()
 {
+    int head_last_position = Head::get_last_position();
     this->tail_list.push_front(head_last_position);
 }
 
-void Tail::draw_snake_tail(string &map)
+void Tail::internal_draw_snake_tail()
 {
     if (this->tail_list.size() == 1)
-        map.replace(this->tail_list.front(), 1, "o");
+        Map::canvas.replace(this->tail_list.front(), 1, "o");
     else
     {
         for (int node : this->tail_list)
         {
-            map.replace(node, 1, "o"); //Paramters: Position, Size, Content
+            Map::canvas.replace(node, 1, "o"); //Paramters: Position, Size, Content
         }
-        map.replace(this->tail_list.back(), 1, " ");
+        Map::canvas.replace(this->tail_list.back(), 1, " ");
     }
 }
 
-void Tail::move(string &map)
+void Tail::internal_move()
 {
     if (this->tail_list.size() > 0)
     {
-        draw_snake_tail(map);
-        map.replace(this->tail_list.back(), 1, " ");
+        internal_draw_snake_tail();
+        Map::canvas.replace(this->tail_list.back(), 1, " ");
     }
 }
-
-Tail::Tail() {}

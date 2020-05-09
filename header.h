@@ -97,9 +97,6 @@ private:
 class Snake
 {
 public:
-    void mtr(int v);
-    /*Head head;
-    Tail tail;*/
 };
 
 class Head
@@ -127,6 +124,7 @@ public:
     static bool hit() { return get_instance().internal_hit(); }
 
 private:
+    Head();
     void internal_move_up();
     void internal_move_left();
     void internal_move_right();
@@ -134,8 +132,6 @@ private:
     int internal_get_last_position();
     int internal_get_position();
     bool internal_hit();
-
-    Head();
     int find_position();
     bool detect_shock(char key_pressed);
     int calculate_next_position(char key_pressed);
@@ -146,42 +142,35 @@ private:
     void draw_up();
     void draw_down();
 };
-/*
-class Head
-{
-private:
-    int head_position;
-    int head_last_position;
-    int wall_position;
-    int tail_position;
 
-private:
-    int find_position();
-    bool detect_shock(char key_pressed);
-    int calculate_next_position(char key_pressed);
-    int detect_wall(char key_pressed);
-    int detect_tail(char key_pressed);
-    void draw_left();
-    void draw_right();
-    void draw_up();
-    void draw_down();
+class Tail
+{
+public:
+    list<int> tail_list;
 
 public:
-    bool wall_shock;
-    Head();
-    void set_last_position();
-    int inform_position();
-    void move_up();
-    void move_left();
-    void move_right();
-    void move_down();
-    int get_last_position();
-    int get_position();
-    bool hit();
-};
-*/
+    Tail(const Tail &) = delete;
+    static Tail &get_instance()
+    {
+        static Tail instance;
+        return instance;
+    }
 
-class Tail /*: public Head*/
+    static auto Tail_movenent() { return get_instance().internal_Tail_movenent(); }
+    static auto tail_increase_size() { return get_instance().internal_tail_increase_size(); }
+    static auto draw_snake_tail() { return get_instance().internal_draw_snake_tail(); };
+    static auto move() { return get_instance().internal_move(); };
+
+private:
+    Tail() {}
+    void internal_Tail_movenent();
+    void internal_tail_increase_size();
+    void internal_draw_snake_tail();
+    void internal_move();
+};
+
+/*
+class Tail //: public Head
 {
 public:
     list<int> tail_list;
@@ -191,7 +180,7 @@ public:
     void draw_snake_tail(string &map);
     void move(string &map);
 };
-
+*/
 class Fruit
 {
 private:

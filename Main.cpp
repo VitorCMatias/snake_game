@@ -8,7 +8,6 @@ int main()
     System sys;
     Map::canvas = sys.get_file_content("Map.txt");
     Fruit fruit;
-    Tail tail;
     int lives = 1;
     int score = 0;
     int difficulty = 80;
@@ -16,9 +15,9 @@ int main()
     float clock = 0;
 
     sys.show_consol_cursor(false);
-    Map::canvas = sys.get_file_content("Map.txt");
-    Map::print();
     system("cls");
+    Map::print();
+    
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
@@ -48,14 +47,14 @@ int main()
         if (Head::hit())
             lives--;
         else
-            tail.Tail_movenent(Head::get_last_position());
+            Tail::Tail_movenent();
 
-        tail.move(Map::canvas);
+        Tail::move();
 
         if (Head::get_position() == fruit.get_position())
         {
-            tail.tail_increase_size(Head::get_last_position());
-            tail.move(Map::canvas);
+            Tail::tail_increase_size();
+            Tail::move();
             fruit.draw(Map::canvas);
             score += 10;
         }
