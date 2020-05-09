@@ -78,7 +78,6 @@ int Map::calculate_height() { return (canvas.size() / width) + 1; }
 int Map::internal_get_width() { return width; }
 int Map::internal_get_height() { return height; }
 
-
 void Map::internal_print()
 {
 

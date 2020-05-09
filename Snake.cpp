@@ -7,9 +7,6 @@ Head::Head()
     this->head_last_position = this->head_position;
 }
 
-
-
-
 int Head::calculate_next_position(char key_pressed)
 {
     const int width = Map::get_width();
@@ -38,18 +35,14 @@ int Head::calculate_next_position(char key_pressed)
     return head_next_position;
 }
 
-
-
-void Snake::mtr(int v){
-    Map::canvas.replace(v, 1, "9"); 
+void Snake::mtr(int v)
+{
+    Map::canvas.replace(v, 1, "9");
 }
 
-
-
-
-bool Head::hit(){
+bool Head::hit()
+{
     return this->wall_shock;
-
 }
 
 int Head::find_position()
@@ -79,9 +72,6 @@ int Head::detect_tail(char key_pressed)
     return tail_position;
 }
 
-
-
-
 bool Head::detect_shock(char key_pressed)
 {
     bool head_hit_tail = false;
@@ -95,22 +85,18 @@ bool Head::detect_shock(char key_pressed)
         }
     }*/
 
-    if (this->head_position == this->tail_position){
+    if (this->head_position == this->tail_position)
+    {
         head_hit_tail = true;
-        
     }
-        
+
     else if (this->head_position == this->head_last_position)
         head_hit_wall = true;
     if (this->head_position == this->wall_position)
         head_hit_wall = true;
 
-    return head_hit_wall||head_hit_tail;
+    return head_hit_wall || head_hit_tail;
 }
-
-
-
-
 
 void Head::draw_left()
 {
@@ -202,12 +188,6 @@ int Head::get_position()
     return this->head_position;
 }
 
-
-
-
-
-
-
 void Tail::Tail_movenent(int head_last_position)
 {
     if (this->tail_list.size() == 1)
@@ -249,4 +229,4 @@ void Tail::move(string &map)
     }
 }
 
-Tail::Tail(){}
+Tail::Tail() {}

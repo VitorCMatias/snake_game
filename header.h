@@ -88,6 +88,7 @@ public:
 private:
     Map();
     int internal_get_width();
+
     int internal_get_height();
     int calculate_width();
     int calculate_height();
