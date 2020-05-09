@@ -156,31 +156,20 @@ public:
         return instance;
     }
 
-    static auto Tail_movenent() { return get_instance().internal_Tail_movenent(); }
-    static auto tail_increase_size() { return get_instance().internal_tail_increase_size(); }
-    static auto draw_snake_tail() { return get_instance().internal_draw_snake_tail(); };
+    static auto update_position() { return get_instance().internal_update_position(); }
+    static auto increase_size() { return get_instance().internal_increase_size(); }
+    static auto draw() { return get_instance().internal_draw(); };
     static auto move() { return get_instance().internal_move(); };
 
 private:
     Tail() {}
-    void internal_Tail_movenent();
-    void internal_tail_increase_size();
-    void internal_draw_snake_tail();
+    void internal_update_position();
+    void internal_increase_size();
+    void internal_draw();
     void internal_move();
 };
 
-/*
-class Tail //: public Head
-{
-public:
-    list<int> tail_list;
-    Tail();
-    void Tail_movenent(int head_last_position);
-    void tail_increase_size(int head_position);
-    void draw_snake_tail(string &map);
-    void move(string &map);
-};
-*/
+
 class Fruit
 {
 private:

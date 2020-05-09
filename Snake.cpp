@@ -183,7 +183,7 @@ bool Head::internal_hit()
     return wall_shock;
 }
 
-void Tail::internal_Tail_movenent()
+void Tail::internal_update_position()
 {
     int head_last_position = Head::get_last_position();
 
@@ -198,23 +198,23 @@ void Tail::internal_Tail_movenent()
     }
 }
 
-void Tail::internal_tail_increase_size()
+void Tail::internal_increase_size()
 {
     int head_last_position = Head::get_last_position();
     this->tail_list.push_front(head_last_position);
 }
 
-void Tail::internal_draw_snake_tail()
+void Tail::internal_draw()
 {
     if (this->tail_list.size() == 1)
-        Map::canvas.replace(this->tail_list.front(), 1, "o");
+        Map::canvas.replace(tail_list.front(), 1, "o");
     else
     {
         for (int node : this->tail_list)
         {
             Map::canvas.replace(node, 1, "o"); //Paramters: Position, Size, Content
         }
-        Map::canvas.replace(this->tail_list.back(), 1, " ");
+        Map::canvas.replace(tail_list.back(), 1, " ");
     }
 }
 
@@ -222,7 +222,7 @@ void Tail::internal_move()
 {
     if (this->tail_list.size() > 0)
     {
-        internal_draw_snake_tail();
-        Map::canvas.replace(this->tail_list.back(), 1, " ");
+        internal_draw();
+        Map::canvas.replace(tail_list.back(), 1, " ");
     }
 }

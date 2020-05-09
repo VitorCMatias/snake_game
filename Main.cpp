@@ -17,7 +17,6 @@ int main()
     sys.show_consol_cursor(false);
     system("cls");
     Map::print();
-    
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
@@ -47,13 +46,14 @@ int main()
         if (Head::hit())
             lives--;
         else
-            Tail::Tail_movenent();
-
-        Tail::move();
+        {
+            Tail::update_position();
+            Tail::move();
+        }
 
         if (Head::get_position() == fruit.get_position())
         {
-            Tail::tail_increase_size();
+            Tail::increase_size();
             Tail::move();
             fruit.draw(Map::canvas);
             score += 10;
