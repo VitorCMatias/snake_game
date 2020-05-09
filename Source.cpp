@@ -68,15 +68,17 @@ double Timer::elapsedMilliseconds()
     return std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_StartTime).count();
 }
 
-void Timer::update()
+Timer Timer::update()
 {
     stop();
     clock = clock + elapsedMilliseconds();
+    return *this;
 }
 
-void Timer::print()
+Timer Timer::print()
 {
     printf("%0.1f\n", clock / 1000.0);
+    return *this;
 }
 
 void gotoxy(short x, short y)

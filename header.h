@@ -43,8 +43,8 @@ private:
 
 public:
     void start();
-    void update();
-    void print();
+    Timer update();
+    Timer print();
     Timer();
 };
 

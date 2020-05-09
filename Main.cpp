@@ -74,8 +74,7 @@ int main()
         Sleep(difficulty);
         Map::print();
 
-        timer.update();
-        timer.print();
+        timer.update().print();
         printf("Score: %d\n", score);
         
         //cout<<"\n"<<s_AllocCount<<" allocations";
