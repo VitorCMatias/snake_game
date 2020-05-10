@@ -1,9 +1,7 @@
 #include "header.h"
 
-
 //g++ -O2 -std=c++17 header.h Source.cpp Main.cpp  -o m
 //g++ -std=c++17 header.h Snake.cpp Source.cpp Main.cpp -o m
-
 
 static uint32_t s_AllocCount = 0;
 
@@ -19,17 +17,21 @@ int main()
 {
     Timer timer;
     System sys;
+
     Map::canvas = sys.get_file_content("Map.txt");
     Fruit fruit;
     int lives = 1;
     int score = 0;
     int difficulty = 80;
     char key_pressed = MOVE_UP;
-    
 
     sys.show_consol_cursor(false);
     system("cls");
     Map::print();
+
+    /*char str[11];
+    sprintf(str,"MODE %d, %d", Map::get_width(), Map::get_height() + 5);
+    system(str);*/
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
@@ -76,11 +78,11 @@ int main()
 
         timer.update().print();
         printf("Score: %d\n", score);
-        
+
         //cout<<"\n"<<s_AllocCount<<" allocations";
     }
 
     system("cls");
-    cout<<s_AllocCount<<" allocations\n";
+    cout << s_AllocCount << " allocations\n";
     return 0;
 }

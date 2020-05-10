@@ -2,10 +2,13 @@
 #include <fstream>
 #include <Windows.h>
 #include <conio.h>
+//#include <conio2.h>
 #include <random>
 #include <chrono>
 #include <list>
 #include <thread>
+
+#include<stdlib.h>
 
 #define FRUIT '*'
 #define WALL '#'
@@ -27,6 +30,10 @@ struct System
     void show_consol_cursor(bool showFlag);
     ~System();
 };
+
+
+
+
 
 class Timer
 {

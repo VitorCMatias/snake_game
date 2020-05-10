@@ -40,7 +40,8 @@ int System::generate_ramdom_number()
     return mt_rand();
 }
 
-Timer::Timer(){
+Timer::Timer()
+{
     this->clock = 0;
 }
 
@@ -97,9 +98,22 @@ int Map::internal_get_height() { return height; }
 
 void Map::internal_print()
 {
+    const int n = Map::canvas.length() + 1;
+    char *map = (char *)malloc(n * sizeof(char));
+    Map::canvas.copy(map, n);
 
     gotoxy(0, 0);
-    cout << Map::canvas << "\n";
+    for (int i = 0; i < n; i++)
+    {
+        if (map[i] == '#')
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),120);
+        else if (map[i] == '0'||map[i] == 'o')
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+        else if (map[i] == '*')
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126|FOREGROUND_INTENSITY);
+
+        printf("%c", map[i]);
+    }
 }
 
 void print_score(int map_height, int score, int lives)
