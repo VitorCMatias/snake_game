@@ -22,16 +22,18 @@ int main()
     Fruit fruit;
     int lives = 1;
     int score = 0;
-    int difficulty = 80;
+    int difficulty = 0;
     char key_pressed = MOVE_UP;
 
     sys.show_consol_cursor(false);
     system("cls");
     Map::print();
 
-    /*char str[11];
+    /*
+    char str[11];
     sprintf(str,"MODE %d, %d", Map::get_width(), Map::get_height() + 5);
-    system(str);*/
+    system(str);
+    */
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {

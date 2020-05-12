@@ -110,7 +110,7 @@ void Map::internal_print()
         else if (map[i] == '0'||map[i] == 'o')
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
         else if (map[i] == '*')
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126|FOREGROUND_INTENSITY);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126|FOREGROUND_INTENSITY );
 
         printf("%c", map[i]);
     }

@@ -40,7 +40,7 @@ int Head::find_position()
     return Map::canvas.find('0');
 }
 
-int Head::detect_wall(char key_pressed)
+int Head::detect_wall(const char key_pressed)
 {
     int wall_position = 0;
     int head_lock_ahead = calculate_next_position(key_pressed);
@@ -51,7 +51,7 @@ int Head::detect_wall(char key_pressed)
     return wall_position;
 }
 
-int Head::detect_tail(char key_pressed)
+int Head::detect_tail(const char key_pressed)
 {
     int tail_position = 0;
     int head_lock_ahead = calculate_next_position(key_pressed);
@@ -62,7 +62,7 @@ int Head::detect_tail(char key_pressed)
     return tail_position;
 }
 
-bool Head::detect_shock(char key_pressed)
+bool Head::detect_shock(const char key_pressed)
 {
     bool head_hit_tail = false;
     bool head_hit_wall = false;
