@@ -114,6 +114,8 @@ public:
 class Head
 {
 private:
+    int x;
+    int y;
     int head_position;
     int head_last_position;
     int wall_position;
@@ -153,6 +155,7 @@ private:
     void draw_right();
     void draw_up();
     void draw_down();
+    
 };
 
 class Tail
@@ -194,3 +197,8 @@ public:
 };
 
 void print_score(int map_height, int score, int lives);
+void gotoxy(short x, short y);
+COORD getxy (  CONSOLE_SCREEN_BUFFER_INFO * csbi);
+char getCursorChar();
+int set_y();
+int set_x();

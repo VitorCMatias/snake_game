@@ -89,6 +89,27 @@ void gotoxy(short x, short y)
     SetConsoleCursorPosition(output, pos);
 }
 
+COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi)
+{
+    COORD coord = csbi->dwCursorPosition;
+    return coord;
+}
+
+char getCursorChar()
+{
+    char c = '\0';
+
+    CONSOLE_SCREEN_BUFFER_INFO con;
+    HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hcon != INVALID_HANDLE_VALUE && GetConsoleScreenBufferInfo(hcon, &con))
+    {
+        DWORD read = 0;
+        if (!ReadConsoleOutputCharacterA(hcon, &c, 1, con.dwCursorPosition, &read) || read != 1)
+            c = '\0';
+    }
+    return c;
+}
+
 string Map::canvas;
 Map::Map() : width(calculate_width()), height(calculate_height()) {}
 int Map::calculate_width() { return (canvas.find('\n') + 1); }
@@ -98,6 +119,10 @@ int Map::internal_get_height() { return height; }
 
 void Map::internal_print()
 {
+    gotoxy(0, 0);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 120);
+    cout<<Map::canvas<<'\n';
+    /*
     const int n = Map::canvas.length() + 1;
     char *map = (char *)malloc(n * sizeof(char));
     Map::canvas.copy(map, n);
@@ -106,14 +131,15 @@ void Map::internal_print()
     for (int i = 0; i < n; i++)
     {
         if (map[i] == '#')
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),120);
-        else if (map[i] == '0'||map[i] == 'o')
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 120);
+        else if (map[i] == '0' || map[i] == 'o')
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
         else if (map[i] == '*')
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126|FOREGROUND_INTENSITY );
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126 | FOREGROUND_INTENSITY);
 
         printf("%c", map[i]);
     }
+    */
 }
 
 void print_score(int map_height, int score, int lives)

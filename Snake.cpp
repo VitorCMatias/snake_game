@@ -226,3 +226,15 @@ void Tail::internal_move()
         Map::canvas.replace(tail_list.back(), 1, " ");
     }
 }
+
+int set_y()
+{
+    //2 = upper and lower wall
+    return Head::get_position() % Map::get_height() + 2;
+    
+}
+int set_x()
+{
+    return Head::get_position() % Map::get_width();
+}
+
