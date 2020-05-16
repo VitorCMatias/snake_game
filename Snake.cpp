@@ -89,86 +89,6 @@ bool Head::detect_shock(const char key_pressed)
     return head_hit_wall || head_hit_tail;
 }
 
-void Head::draw_left()
-{
-    const int width = Map::get_width();
-
-    if (head_position % width > 1 && head_position - 1 != wall_position)
-    {
-        Map::canvas.replace(head_position - 1, 2, "0 "); //Paramters: Position, Size, Content
-        this->head_position--;
-    }
-}
-
-void Head::draw_right()
-{
-    const int width = Map::get_width();
-
-    if (head_position % width < width - 3 && head_position + 1 != wall_position) // 3 por causa das duas paredes '#' e do \n
-    {
-        Map::canvas.replace(head_position, 2, " 0"); //Paramters: Position, Size, Content
-        this->head_position++;
-    }
-}
-
-void Head::draw_up()
-{
-    const int width = Map::get_width();
-
-    if (head_position / width > 1 && head_position - width != wall_position)
-    {
-        Map::canvas.replace(head_position, 1, " "); //Paramters: Position, Size, Content
-        this->head_position = head_position - width;
-        Map::canvas.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
-    }
-}
-
-void Head::draw_down()
-{
-    const int height = Map::get_height();
-    const int width = Map::get_width();
-
-    if (head_position < (height - 2) * width && head_position + width != wall_position)
-    {
-        Map::canvas.replace(head_position, 1, " "); //Paramters: Position, Size, Content
-        this->head_position = head_position + width;
-        Map::canvas.replace(head_position, 1, "0"); //Paramters: Position, Size, Content
-    }
-}
-
-void Head::internal_move_up()
-{
-    this->head_last_position = head_position;
-    this->wall_position = detect_wall(MOVE_UP);
-    this->tail_position = detect_tail(MOVE_UP);
-    draw_up();
-    this->wall_shock = detect_shock(MOVE_UP);
-}
-
-void Head::internal_move_left()
-{
-    this->head_last_position = head_position;
-    this->wall_position = detect_wall(MOVE_LEFT);
-    draw_left();
-    this->wall_shock = detect_shock(MOVE_LEFT);
-}
-
-void Head::internal_move_right()
-{
-    this->head_last_position = head_position;
-    this->wall_position = detect_wall(MOVE_RIGHT);
-    draw_right();
-    this->wall_shock = detect_shock(MOVE_RIGHT);
-}
-
-void Head::internal_move_down()
-{
-    this->head_last_position = head_position;
-    this->wall_position = detect_wall(MOVE_DOWN);
-    draw_down();
-    this->wall_shock = detect_shock(MOVE_DOWN);
-}
-
 int Head::internal_get_last_position()
 {
     return head_last_position;
@@ -182,6 +102,65 @@ int Head::internal_get_position()
 bool Head::internal_hit()
 {
     return wall_shock;
+}
+
+void Head::calculate_next_coord(char key_pressed)
+{
+    switch (key_pressed)
+    {
+    case MOVE_UP:
+        Head::y -= 1;
+        break;
+    case MOVE_LEFT:
+        Head::x -= 1;
+        break;
+    case MOVE_DOWN:
+        Head::y += 1;
+        break;
+    case MOVE_RIGHT:
+        Head::x += 1;
+        break;
+    default:
+        break;
+    }
+}
+
+void Head::detect_colision()
+{
+    //bool colision = false;
+    gotoxy(Head::x, Head::y);
+    if (get_cursor_char() == '#')
+        this->wall_shock = true;
+    else
+    {
+        this->wall_shock = false;
+    }
+}
+
+bool Head::internal_get_colision()
+{
+    return wall_shock;
+}
+
+void Head::internal_set_coord()
+{
+    Head::x = set_x();
+    Head::y = set_y();
+}
+
+void Head::internal_print()
+{
+    gotoxy(Head::x, Head::y);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+    cout << '0';
+}
+
+void Head::internal_move(char key_pressed)
+{
+    gotoxy(Head::x, Head::y);
+    cout << ' ';
+    calculate_next_coord(key_pressed);
+    detect_colision();
 }
 
 void Tail::internal_update_position()

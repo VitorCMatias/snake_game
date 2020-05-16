@@ -6,9 +6,9 @@
 #include <chrono>
 #include <list>
 #include <thread>
+#include <stdlib.h>
 
-#include<stdlib.h>
-
+#define HEAD '0'
 #define FRUIT '*'
 #define WALL '#'
 #define MOVE_UP 'W'
@@ -30,10 +30,6 @@ struct System
     ~System();
 };
 
-
-
-
-
 class Timer
 {
 private:
@@ -43,7 +39,6 @@ private:
     double clock;
 
 private:
-    
     void stop();
     double elapsedMilliseconds();
 
@@ -113,12 +108,9 @@ public:
 
 class Head
 {
-public:
+private:
     static int x;
     static int y;
-
-private:
-
     int head_position;
     int head_last_position;
     int wall_position;
@@ -132,20 +124,17 @@ public:
         static Head instance;
         return instance;
     }
-    static auto move_up() { return get_instance().internal_move_up(); }
-    static auto move_left() { return get_instance().internal_move_left(); }
-    static auto move_right() { return get_instance().internal_move_right(); }
-    static auto move_down() { return get_instance().internal_move_down(); }
+
     static int get_last_position() { return get_instance().internal_get_last_position(); }
     static int get_position() { return get_instance().internal_get_position(); }
     static bool hit() { return get_instance().internal_hit(); }
+    static bool get_colision() { return get_instance().internal_get_colision(); }
+    static auto print() { return get_instance().internal_print(); }
+    static auto move(char key_pressed) { return get_instance().internal_move(key_pressed); }
+    static auto set_coord(){ return get_instance().internal_set_coord(); }
 
 private:
     Head();
-    void internal_move_up();
-    void internal_move_left();
-    void internal_move_right();
-    void internal_move_down();
     int internal_get_last_position();
     int internal_get_position();
     bool internal_hit();
@@ -154,11 +143,12 @@ private:
     int calculate_next_position(char key_pressed);
     int detect_wall(char key_pressed);
     int detect_tail(char key_pressed);
-    void draw_left();
-    void draw_right();
-    void draw_up();
-    void draw_down();
-    
+    void calculate_next_coord(char key_pressed);
+    void detect_colision();
+    bool internal_get_colision();
+    void internal_print();
+    void internal_move(char key_pressed);
+    void internal_set_coord();
 };
 
 class Tail
@@ -201,7 +191,7 @@ public:
 
 void print_score(int map_height, int score, int lives);
 void gotoxy(short x, short y);
-COORD getxy (  CONSOLE_SCREEN_BUFFER_INFO * csbi);
-char getCursorChar();
+COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi);
+char get_cursor_char();
 int set_y();
 int set_x();

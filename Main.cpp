@@ -19,13 +19,14 @@ int main()
     System sys;
 
     Map::canvas = sys.get_file_content("Map.txt");
+    Head::set_coord();
+
     Fruit fruit;
     int lives = 1;
     int score = 0;
     int difficulty = 80;
     char key_pressed = MOVE_UP;
-    Head::x = set_x();
-    Head::y = set_y();
+
     sys.show_consol_cursor(false);
     system("cls");
     Map::print();
@@ -43,36 +44,11 @@ int main()
 
         if (_kbhit())
             key_pressed = toupper(_getch());
-
-        gotoxy(Head::x, Head::y);
-        cout << ' ';
-
-        switch (key_pressed)
-        {
-        case MOVE_UP:
-            Head::y -= 1;
-            break;
-        case MOVE_LEFT:
-            Head::x -= 1;
-            break;
-        case MOVE_DOWN:
-            Head::y += 1;
-            break;
-        case MOVE_RIGHT:
-            Head::x += 1;
-            break;
-        default:
-            break;
-        }
-
-        gotoxy(Head::x, Head::y);
-        if (getCursorChar() == '#')
+        Head::move(key_pressed);
+        if (Head::get_colision())
             lives--;
         else
-        {
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
-            cout << '0';
-        }
+            Head::print();
 
         gotoxy(0, Map::get_height() + 10);
         cout << "Hp: " << Head::get_position() << "\n";
@@ -81,7 +57,7 @@ int main()
         cout << "w: " << Map::get_width() << "\n";
         cout << "h_w: " << Head::get_position() % Map::get_width() << "\n";
         gotoxy(10, 0);
-        char ch = getCursorChar();
+        char ch = get_cursor_char();
         //gotoxy(10, 60);
         //cout<<ch;
 

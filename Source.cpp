@@ -95,7 +95,7 @@ COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi)
     return coord;
 }
 
-char getCursorChar()
+char get_cursor_char()
 {
     char c = '\0';
 
