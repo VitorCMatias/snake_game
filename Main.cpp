@@ -24,8 +24,8 @@ int main()
     int score = 0;
     int difficulty = 80;
     char key_pressed = MOVE_UP;
-    int x = set_x();
-    int y = set_y();
+    Head::x = set_x();
+    Head::y = set_y();
     sys.show_consol_cursor(false);
     system("cls");
     Map::print();
@@ -44,67 +44,34 @@ int main()
         if (_kbhit())
             key_pressed = toupper(_getch());
 
+        gotoxy(Head::x, Head::y);
+        cout << ' ';
+
         switch (key_pressed)
         {
         case MOVE_UP:
-            //Head::move_up();
-            gotoxy(x, y);
-            cout<<' ';
-            y -= 1;
-            gotoxy(x, y);
-            if (getCursorChar() == '#')
-                lives--;
-            else
-            {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
-                cout<<'0';
-            }
-
+            Head::y -= 1;
             break;
         case MOVE_LEFT:
-            //Head::move_left();
-            gotoxy(x, y);
-            cout<<' ';
-            x -= 1;
-            gotoxy(x, y);
-            if (getCursorChar() == '#')
-                lives--;
-            else
-            {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
-                cout<<'0';
-            }
+            Head::x -= 1;
             break;
         case MOVE_DOWN:
-            gotoxy(x, y);
-            cout<<' ';
-            y += 1;
-            gotoxy(x, y);
-            if (getCursorChar() == '#')
-                lives--;
-            else
-            {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
-                cout<<'0';
-            }
-            //Head::move_down();
+            Head::y += 1;
             break;
         case MOVE_RIGHT:
-            gotoxy(x, y);
-            cout<<' ';
-            x += 1;
-            gotoxy(x, y);
-            if (getCursorChar() == '#')
-                lives--;
-            else
-            {
-                SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
-                cout<<'0';
-            }
-            //Head::move_right();
+            Head::x += 1;
             break;
         default:
             break;
+        }
+
+        gotoxy(Head::x, Head::y);
+        if (getCursorChar() == '#')
+            lives--;
+        else
+        {
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+            cout << '0';
         }
 
         gotoxy(0, Map::get_height() + 10);

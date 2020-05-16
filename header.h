@@ -113,9 +113,12 @@ public:
 
 class Head
 {
+public:
+    static int x;
+    static int y;
+
 private:
-    int x;
-    int y;
+
     int head_position;
     int head_last_position;
     int wall_position;
