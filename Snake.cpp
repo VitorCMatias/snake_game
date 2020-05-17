@@ -216,3 +216,8 @@ int set_x()
 {
     return Head::get_position() % Map::get_width();
 }
+
+tuple<int, int> Head::internal_get_coord()
+{
+    return tie(x, y);
+}

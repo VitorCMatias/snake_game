@@ -24,12 +24,13 @@ int main()
     Fruit fruit;
     int lives = 1;
     int score = 0;
-    int difficulty = 80;
+    int difficulty = 90;
     char key_pressed = MOVE_UP;
 
     sys.show_consol_cursor(false);
     system("cls");
     Map::print();
+    fruit.draw();
 
     /*
     char str[11];
@@ -40,7 +41,7 @@ int main()
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         Sleep(difficulty);
-        timer.start();
+        //timer.start();
 
         if (_kbhit())
             key_pressed = toupper(_getch());
@@ -50,14 +51,27 @@ int main()
         else
             Head::print();
 
+        if (Head::get_coord() == fruit.get_coord())
+        {
+            fruit.generate();
+            score += 10;
+        }
+
         gotoxy(0, Map::get_height() + 10);
-        cout << "Hp: " << Head::get_position() << "\n";
+
+
+
+        printf("Score: %d\n", score);
+        
+        //std::cout<<"H " << Map::get_height()<<"W "<<Map::get_width() << '\n';
+        /*cout << "Hp: " << Head::get_position() << "\n";
         cout << "h: " << Map::get_height() << "\n";
         cout << "h_h: " << Head::get_position() % Map::get_height() << "\n";
         cout << "w: " << Map::get_width() << "\n";
-        cout << "h_w: " << Head::get_position() % Map::get_width() << "\n";
-        gotoxy(10, 0);
-        char ch = get_cursor_char();
+        cout << "h_w: " << Head::get_position() % Map::get_width() << "\n";*/
+        
+        
+
         //gotoxy(10, 60);
         //cout<<ch;
 

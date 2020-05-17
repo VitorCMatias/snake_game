@@ -120,8 +120,11 @@ int Map::internal_get_height() { return height; }
 void Map::internal_print()
 {
     gotoxy(0, 0);
+    
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 120);
-    cout<<Map::canvas<<'\n';
+    cout << Map::canvas << '\n';
+    
+    //cout<<"\033[3;100;30m"<< Map::canvas<<"\033[0m\n";
     /*
     const int n = Map::canvas.length() + 1;
     char *map = (char *)malloc(n * sizeof(char));
@@ -153,13 +156,15 @@ void print_score(int map_height, int score, int lives)
 Fruit::Fruit()
 {
     this->fruit_position = find_position();
+    this->x = set_x();
+    this->y = set_y();
 }
 
 int Fruit::find_position()
 {
-    int fruit_position = Map::canvas.find('*');
+    int fruit_position = Map::canvas.find(FRUIT);
 
-    if (Map::canvas.find('*') == string::npos)
+    /*if (Map::canvas.find('*') == string::npos)
     {
         System sys;
 
@@ -169,7 +174,7 @@ int Fruit::find_position()
             fruit_position = sys.generate_ramdom_number() % Map::canvas.length();
 
         Map::canvas.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
-    }
+    }*/
 
     return fruit_position;
 }
@@ -191,4 +196,49 @@ void Fruit::draw(string &map)
     map.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
 
     this->fruit_position = fruit_position;
+}
+
+void Fruit::generate_position()
+{
+    System sys;
+    int new_fruit_position;
+    int fruit_x_position;
+    int fruit_y_position;
+
+    do
+    {
+        new_fruit_position = sys.generate_ramdom_number() % Map::canvas.length();
+    } while (Map::canvas.at(new_fruit_position) != ' ');
+
+    this->x = new_fruit_position % Map::get_width();
+    this->y = new_fruit_position / Map::get_width();
+}
+
+void Fruit::draw()
+{
+    gotoxy(x, y);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126 | FOREGROUND_INTENSITY);
+    cout << FRUIT;
+}
+
+int Fruit::set_x()
+{
+    return fruit_position % Map::get_width();
+}
+
+int Fruit::set_y()
+{
+    //2 : upper and lower wall
+    return (fruit_position / Map::get_width());
+}
+
+tuple<int, int> Fruit::get_coord()
+{
+    return tie(x, y);
+}
+
+void Fruit::generate()
+{
+    generate_position();
+    draw();
 }

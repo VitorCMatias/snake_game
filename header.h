@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <random>
 #include <chrono>
+#include <tuple>
 #include <list>
 #include <thread>
 #include <stdlib.h>
@@ -131,7 +132,9 @@ public:
     static bool get_colision() { return get_instance().internal_get_colision(); }
     static auto print() { return get_instance().internal_print(); }
     static auto move(char key_pressed) { return get_instance().internal_move(key_pressed); }
-    static auto set_coord(){ return get_instance().internal_set_coord(); }
+    static auto set_coord() { return get_instance().internal_set_coord(); }
+    static auto get_coord() { return get_instance().internal_get_coord(); }
+    static auto print_coord() { return get_instance().internal_print_coord(); }
 
 private:
     Head();
@@ -149,6 +152,9 @@ private:
     void internal_print();
     void internal_move(char key_pressed);
     void internal_set_coord();
+    tuple<int, int> internal_get_coord();
+
+    void internal_print_coord() { cout << "H_x:" << x << "H_y: " << y << '\n'; }
 };
 
 class Tail
@@ -181,12 +187,27 @@ class Fruit
 {
 private:
     int fruit_position;
+    int x;
+    int y;
+
+private:
     int find_position();
 
 public:
     Fruit();
+    void generate();
     int get_position();
     void draw(string &map);
+    tuple<int, int> get_coord();
+    void draw();
+    //void print_coord() { cout << "F_x:" << x << "f_y: " << y << '\n' << "f_p: " << fruit_position << '\n'; }
+    
+
+private:
+    
+    int set_y();
+    int set_x();
+    void generate_position();
 };
 
 void print_score(int map_height, int score, int lives);
