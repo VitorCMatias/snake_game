@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #define HEAD '0'
+#define TAIL_NODE 'o'
 #define FRUIT '*'
 #define WALL '#'
 #define MOVE_UP 'W'
@@ -117,6 +118,7 @@ private:
     int wall_position;
     int tail_position;
     bool wall_shock;
+    bool tail_shock;
 
 public:
     Head(const Head &) = delete;
@@ -136,6 +138,9 @@ public:
     static auto get_coord() { return get_instance().internal_get_coord(); }
     static auto print_coord() { return get_instance().internal_print_coord(); }
 
+    static int get_x() { return get_instance().internal_get_x(); }
+    static int get_y() { return get_instance().internal_get_y(); }
+
 private:
     Head();
     int internal_get_last_position();
@@ -147,12 +152,16 @@ private:
     int detect_wall(char key_pressed);
     int detect_tail(char key_pressed);
     void calculate_next_coord(char key_pressed);
-    void detect_colision();
+    bool detect_wall_colision();
+    bool detect_tail_colision();
     bool internal_get_colision();
     void internal_print();
     void internal_move(char key_pressed);
     void internal_set_coord();
     tuple<int, int> internal_get_coord();
+    int internal_get_x() { return x; }
+    int internal_get_y() { return y; }
+    int convert_coord_to_one_dimendion();
 
     void internal_print_coord() { cout << "H_x:" << x << "H_y: " << y << '\n'; }
 };
@@ -172,8 +181,8 @@ public:
 
     static auto update_position() { return get_instance().internal_update_position(); }
     static auto increase_size() { return get_instance().internal_increase_size(); }
-    static auto draw() { return get_instance().internal_draw(); };
-    static auto move() { return get_instance().internal_move(); };
+    static auto draw() { return get_instance().internal_draw(); }
+    static auto move() { return get_instance().internal_move(); }
 
 private:
     Tail() {}
@@ -201,10 +210,8 @@ public:
     tuple<int, int> get_coord();
     void draw();
     //void print_coord() { cout << "F_x:" << x << "f_y: " << y << '\n' << "f_p: " << fruit_position << '\n'; }
-    
 
 private:
-    
     int set_y();
     int set_x();
     void generate_position();

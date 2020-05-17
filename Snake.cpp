@@ -34,6 +34,7 @@ int Head::calculate_next_position(char key_pressed)
     }
 
     return head_next_position;
+    
 }
 
 int Head::find_position()
@@ -125,21 +126,36 @@ void Head::calculate_next_coord(char key_pressed)
     }
 }
 
-void Head::detect_colision()
+bool Head::detect_wall_colision()
 {
-    //bool colision = false;
+    bool colision; // = false;
     gotoxy(Head::x, Head::y);
-    if (get_cursor_char() == '#')
-        this->wall_shock = true;
+    if (get_cursor_char() == WALL)
+        colision = true;
     else
     {
-        this->wall_shock = false;
+        colision = false;
     }
+    return colision;
 }
+
+bool Head::detect_tail_colision()
+{
+    bool colision; // = false;
+    gotoxy(Head::x, Head::y);
+    if (get_cursor_char() == TAIL_NODE)
+        colision = true;
+    else
+    {
+        colision = false;
+    }
+    return colision;
+}
+
 
 bool Head::internal_get_colision()
 {
-    return wall_shock;
+    return wall_shock||tail_shock;
 }
 
 void Head::internal_set_coord()
@@ -152,15 +168,29 @@ void Head::internal_print()
 {
     gotoxy(Head::x, Head::y);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
-    cout << '0';
+    cout << HEAD;
 }
 
 void Head::internal_move(char key_pressed)
 {
+    this->head_last_position = head_position;
     gotoxy(Head::x, Head::y);
     cout << ' ';
     calculate_next_coord(key_pressed);
-    detect_colision();
+    this->wall_shock = detect_wall_colision();
+    this->tail_shock = detect_tail_colision();
+    if (!wall_shock)
+        this->head_position = convert_coord_to_one_dimendion();
+}
+
+int Head::convert_coord_to_one_dimendion()
+{
+    return y * Map::get_width() + x;
+}
+
+tuple<int, int> Head::internal_get_coord()
+{
+    return tie(x, y);
 }
 
 void Tail::internal_update_position()
@@ -184,6 +214,7 @@ void Tail::internal_increase_size()
     this->tail_list.push_front(head_last_position);
 }
 
+/*
 void Tail::internal_draw()
 {
     if (this->tail_list.size() == 1)
@@ -197,27 +228,50 @@ void Tail::internal_draw()
         Map::canvas.replace(tail_list.back(), 1, " ");
     }
 }
+*/
+void Tail::internal_draw()
+{
+    const int map_width = Map::get_width();
+
+    if (this->tail_list.size() == 1)
+    {
+        gotoxy(tail_list.front() % map_width, tail_list.front() / map_width);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+        cout << TAIL_NODE;
+    }
+    else
+    {
+        for (int node : this->tail_list)
+        {
+            gotoxy(node % map_width, node / map_width);
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+            cout << TAIL_NODE;
+        }
+        gotoxy(tail_list.back() % map_width, tail_list.back() / map_width);
+        cout << ' ';
+    }
+}
 
 void Tail::internal_move()
 {
+
+    const int map_width = Map::get_width();
+    internal_update_position();
+
     if (this->tail_list.size() > 0)
     {
         internal_draw();
-        Map::canvas.replace(tail_list.back(), 1, " ");
+        gotoxy(tail_list.back() % map_width, tail_list.back() / map_width);
+        cout << ' ';
     }
 }
 
 int set_y()
 {
     //2 = upper and lower wall
-    return Head::get_position() % Map::get_height() + 2;
+    return Head::get_position() / Map::get_width();
 }
 int set_x()
 {
     return Head::get_position() % Map::get_width();
-}
-
-tuple<int, int> Head::internal_get_coord()
-{
-    return tie(x, y);
 }

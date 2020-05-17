@@ -8,6 +8,7 @@ static uint32_t s_AllocCount = 0;
 void *operator new(size_t size)
 {
     s_AllocCount++;
+    gotoxy(0, Map::get_height() + 3);
     cout << "\nAlocating " << size << "bytes\n";
 
     return malloc(size);
@@ -46,6 +47,7 @@ int main()
         if (_kbhit())
             key_pressed = toupper(_getch());
         Head::move(key_pressed);
+        Tail::move();
         if (Head::get_colision())
             lives--;
         else
@@ -53,29 +55,34 @@ int main()
 
         if (Head::get_coord() == fruit.get_coord())
         {
+            Tail::increase_size();
+            Tail::move();
             fruit.generate();
             score += 10;
         }
 
         gotoxy(0, Map::get_height() + 10);
 
-
-
         printf("Score: %d\n", score);
-        
+        cout << Head::get_position() << '\n';
+        for (int i : Tail::get_instance().tail_list)
+            cout << i << " ";
+        cout << '\n';
+
         //std::cout<<"H " << Map::get_height()<<"W "<<Map::get_width() << '\n';
-        /*cout << "Hp: " << Head::get_position() << "\n";
+        /*
+        cout << "Hp: " << Head::get_position() << "\n";
         cout << "h: " << Map::get_height() << "\n";
         cout << "h_h: " << Head::get_position() % Map::get_height() << "\n";
         cout << "w: " << Map::get_width() << "\n";
-        cout << "h_w: " << Head::get_position() % Map::get_width() << "\n";*/
-        
-        
+        cout << "h_w: " << Head::get_position() % Map::get_width() << "\n";
+        */
 
         //gotoxy(10, 60);
         //cout<<ch;
 
-        /*if (Head::hit())
+        /*
+        if (Head::hit())
             lives--;
         else
         {
