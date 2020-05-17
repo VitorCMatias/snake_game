@@ -96,7 +96,6 @@ public:
 private:
     Map();
     int internal_get_width();
-
     int internal_get_height();
     int calculate_width();
     int calculate_height();
@@ -115,8 +114,6 @@ private:
     static int y;
     int head_position;
     int head_last_position;
-    int wall_position;
-    int tail_position;
     bool wall_shock;
     bool tail_shock;
 
@@ -130,45 +127,44 @@ public:
 
     static int get_last_position() { return get_instance().internal_get_last_position(); }
     static int get_position() { return get_instance().internal_get_position(); }
-    static bool hit() { return get_instance().internal_hit(); }
     static bool get_colision() { return get_instance().internal_get_colision(); }
     static auto print() { return get_instance().internal_print(); }
     static auto move(char key_pressed) { return get_instance().internal_move(key_pressed); }
     static auto set_coord() { return get_instance().internal_set_coord(); }
     static auto get_coord() { return get_instance().internal_get_coord(); }
-    static auto print_coord() { return get_instance().internal_print_coord(); }
 
+    /*
+    static auto print_coord() { return get_instance().internal_print_coord(); }
     static int get_x() { return get_instance().internal_get_x(); }
     static int get_y() { return get_instance().internal_get_y(); }
+    */
 
 private:
     Head();
-    int internal_get_last_position();
-    int internal_get_position();
-    bool internal_hit();
-    int find_position();
-    bool detect_shock(char key_pressed);
-    int calculate_next_position(char key_pressed);
-    int detect_wall(char key_pressed);
-    int detect_tail(char key_pressed);
-    void calculate_next_coord(char key_pressed);
-    bool detect_wall_colision();
-    bool detect_tail_colision();
-    bool internal_get_colision();
     void internal_print();
     void internal_move(char key_pressed);
     void internal_set_coord();
+    int internal_get_last_position();
+    int internal_get_position();
+    bool internal_get_colision();
     tuple<int, int> internal_get_coord();
+
+    void calculate_next_coord(char key_pressed);
+    int convert_coord_to_one_dimendion();
+    int find_position();
+    bool detect_wall_colision();
+    bool detect_tail_colision();
+
+    /*
     int internal_get_x() { return x; }
     int internal_get_y() { return y; }
-    int convert_coord_to_one_dimendion();
-
     void internal_print_coord() { cout << "H_x:" << x << "H_y: " << y << '\n'; }
+    */
 };
 
 class Tail
 {
-public:
+private:
     list<int> tail_list;
 
 public:
@@ -178,15 +174,13 @@ public:
         static Tail instance;
         return instance;
     }
-
-    static auto update_position() { return get_instance().internal_update_position(); }
     static auto increase_size() { return get_instance().internal_increase_size(); }
     static auto draw() { return get_instance().internal_draw(); }
     static auto move() { return get_instance().internal_move(); }
 
 private:
     Tail() {}
-    void internal_update_position();
+    void update_position();
     void internal_increase_size();
     void internal_draw();
     void internal_move();
@@ -206,7 +200,6 @@ public:
     Fruit();
     void generate();
     int get_position();
-    void draw(string &map);
     tuple<int, int> get_coord();
     void draw();
     //void print_coord() { cout << "F_x:" << x << "f_y: " << y << '\n' << "f_p: " << fruit_position << '\n'; }
@@ -219,6 +212,7 @@ private:
 
 void print_score(int map_height, int score, int lives);
 void gotoxy(short x, short y);
+void go_to_console_position(int one_dimension_position);
 COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi);
 char get_cursor_char();
 int set_y();

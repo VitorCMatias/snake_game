@@ -8,86 +8,9 @@ Head::Head()
     this->head_last_position = this->head_position;
 }
 
-int Head::calculate_next_position(char key_pressed)
-{
-    const int width = Map::get_width();
-
-    int head_next_position;
-
-    switch (key_pressed)
-    {
-    case 'W':
-        head_next_position = this->head_position - width;
-        break;
-    case 'A':
-        head_next_position = this->head_position - 1;
-        break;
-    case 'S':
-        head_next_position = this->head_position + width;
-        break;
-    case 'D':
-        head_next_position = this->head_position + 1;
-        break;
-
-    default:
-        break;
-    }
-
-    return head_next_position;
-    
-}
-
 int Head::find_position()
 {
-    return Map::canvas.find('0');
-}
-
-int Head::detect_wall(const char key_pressed)
-{
-    int wall_position = 0;
-    int head_lock_ahead = calculate_next_position(key_pressed);
-    if (Map::canvas.at(head_lock_ahead) == '#')
-    {
-        wall_position = head_lock_ahead;
-    }
-    return wall_position;
-}
-
-int Head::detect_tail(const char key_pressed)
-{
-    int tail_position = 0;
-    int head_lock_ahead = calculate_next_position(key_pressed);
-    if (Map::canvas.at(head_lock_ahead) == 'o')
-    {
-        tail_position = head_lock_ahead;
-    }
-    return tail_position;
-}
-
-bool Head::detect_shock(const char key_pressed)
-{
-    bool head_hit_tail = false;
-    bool head_hit_wall = false;
-    int head_lock_ahead = calculate_next_position(key_pressed);
-
-    /*for(int tail_node : this->tail_list){
-        if(tail_node == this->head_position)
-        {
-            head_hit_tail = true;
-        }
-    }*/
-
-    if (this->head_position == this->tail_position)
-    {
-        head_hit_tail = true;
-    }
-
-    else if (this->head_position == this->head_last_position)
-        head_hit_wall = true;
-    if (this->head_position == this->wall_position)
-        head_hit_wall = true;
-
-    return head_hit_wall || head_hit_tail;
+    return Map::canvas.find(HEAD);
 }
 
 int Head::internal_get_last_position()
@@ -98,11 +21,6 @@ int Head::internal_get_last_position()
 int Head::internal_get_position()
 {
     return head_position;
-}
-
-bool Head::internal_hit()
-{
-    return wall_shock;
 }
 
 void Head::calculate_next_coord(char key_pressed)
@@ -128,34 +46,29 @@ void Head::calculate_next_coord(char key_pressed)
 
 bool Head::detect_wall_colision()
 {
-    bool colision; // = false;
+    bool colision;
     gotoxy(Head::x, Head::y);
     if (get_cursor_char() == WALL)
         colision = true;
     else
-    {
         colision = false;
-    }
     return colision;
 }
 
 bool Head::detect_tail_colision()
 {
-    bool colision; // = false;
+    bool colision;
     gotoxy(Head::x, Head::y);
     if (get_cursor_char() == TAIL_NODE)
         colision = true;
     else
-    {
         colision = false;
-    }
     return colision;
 }
 
-
 bool Head::internal_get_colision()
 {
-    return wall_shock||tail_shock;
+    return wall_shock || tail_shock;
 }
 
 void Head::internal_set_coord()
@@ -193,7 +106,7 @@ tuple<int, int> Head::internal_get_coord()
     return tie(x, y);
 }
 
-void Tail::internal_update_position()
+void Tail::update_position()
 {
     int head_last_position = Head::get_last_position();
 
@@ -214,55 +127,37 @@ void Tail::internal_increase_size()
     this->tail_list.push_front(head_last_position);
 }
 
-/*
-void Tail::internal_draw()
-{
-    if (this->tail_list.size() == 1)
-        Map::canvas.replace(tail_list.front(), 1, "o");
-    else
-    {
-        for (int node : this->tail_list)
-        {
-            Map::canvas.replace(node, 1, "o"); //Paramters: Position, Size, Content
-        }
-        Map::canvas.replace(tail_list.back(), 1, " ");
-    }
-}
-*/
 void Tail::internal_draw()
 {
     const int map_width = Map::get_width();
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
 
     if (this->tail_list.size() == 1)
     {
-        gotoxy(tail_list.front() % map_width, tail_list.front() / map_width);
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+        go_to_console_position(tail_list.front());
         cout << TAIL_NODE;
+        go_to_console_position(tail_list.back());
+        cout << ' ';
     }
     else
     {
         for (int node : this->tail_list)
         {
-            gotoxy(node % map_width, node / map_width);
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
+            go_to_console_position(node);
             cout << TAIL_NODE;
         }
-        gotoxy(tail_list.back() % map_width, tail_list.back() / map_width);
+        go_to_console_position(tail_list.back());
         cout << ' ';
     }
 }
 
 void Tail::internal_move()
 {
-
     const int map_width = Map::get_width();
-    internal_update_position();
-
+    update_position();
     if (this->tail_list.size() > 0)
     {
         internal_draw();
-        gotoxy(tail_list.back() % map_width, tail_list.back() / map_width);
-        cout << ' ';
     }
 }
 

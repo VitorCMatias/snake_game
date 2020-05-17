@@ -89,6 +89,13 @@ void gotoxy(short x, short y)
     SetConsoleCursorPosition(output, pos);
 }
 
+
+void go_to_console_position(int one_dimension_position){
+    gotoxy(one_dimension_position % Map::get_width(), one_dimension_position / Map::get_width());
+}
+
+
+
 COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi)
 {
     COORD coord = csbi->dwCursorPosition;
@@ -125,24 +132,6 @@ void Map::internal_print()
     cout << Map::canvas << '\n';
     
     //cout<<"\033[3;100;30m"<< Map::canvas<<"\033[0m\n";
-    /*
-    const int n = Map::canvas.length() + 1;
-    char *map = (char *)malloc(n * sizeof(char));
-    Map::canvas.copy(map, n);
-
-    gotoxy(0, 0);
-    for (int i = 0; i < n; i++)
-    {
-        if (map[i] == '#')
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 120);
-        else if (map[i] == '0' || map[i] == 'o')
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
-        else if (map[i] == '*')
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126 | FOREGROUND_INTENSITY);
-
-        printf("%c", map[i]);
-    }
-    */
 }
 
 void print_score(int map_height, int score, int lives)
@@ -163,19 +152,6 @@ Fruit::Fruit()
 int Fruit::find_position()
 {
     int fruit_position = Map::canvas.find(FRUIT);
-
-    /*if (Map::canvas.find('*') == string::npos)
-    {
-        System sys;
-
-        fruit_position = sys.generate_ramdom_number() % Map::canvas.length();
-
-        while (Map::canvas.at(fruit_position) != ' ')
-            fruit_position = sys.generate_ramdom_number() % Map::canvas.length();
-
-        Map::canvas.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
-    }*/
-
     return fruit_position;
 }
 
@@ -184,19 +160,7 @@ int Fruit::get_position()
     return fruit_position;
 }
 
-void Fruit::draw(string &map)
-{
-    System sys;
 
-    int fruit_position = sys.generate_ramdom_number() % map.length();
-
-    while (map.at(fruit_position) != ' ')
-        fruit_position = sys.generate_ramdom_number() % map.length();
-
-    map.replace(fruit_position, 1, "*"); //Paramters: Position, Size, Content
-
-    this->fruit_position = fruit_position;
-}
 
 void Fruit::generate_position()
 {

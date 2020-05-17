@@ -42,16 +42,18 @@ int main()
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         Sleep(difficulty);
-        //timer.start();
+        timer.start();
 
         if (_kbhit())
             key_pressed = toupper(_getch());
         Head::move(key_pressed);
-        Tail::move();
+        
         if (Head::get_colision())
             lives--;
         else
             Head::print();
+            Tail::move();
+    
 
         if (Head::get_coord() == fruit.get_coord())
         {
@@ -62,48 +64,9 @@ int main()
         }
 
         gotoxy(0, Map::get_height() + 10);
-
         printf("Score: %d\n", score);
-        cout << Head::get_position() << '\n';
-        for (int i : Tail::get_instance().tail_list)
-            cout << i << " ";
-        cout << '\n';
+        timer.update().print();
 
-        //std::cout<<"H " << Map::get_height()<<"W "<<Map::get_width() << '\n';
-        /*
-        cout << "Hp: " << Head::get_position() << "\n";
-        cout << "h: " << Map::get_height() << "\n";
-        cout << "h_h: " << Head::get_position() % Map::get_height() << "\n";
-        cout << "w: " << Map::get_width() << "\n";
-        cout << "h_w: " << Head::get_position() % Map::get_width() << "\n";
-        */
-
-        //gotoxy(10, 60);
-        //cout<<ch;
-
-        /*
-        if (Head::hit())
-            lives--;
-        else
-        {
-            Tail::update_position();
-            Tail::move();
-        }
-
-        if (Head::get_position() == fruit.get_position())
-        {
-            Tail::increase_size();
-            Tail::move();
-            fruit.draw(Map::canvas);
-            score += 10;
-        }
-        Sleep(difficulty);
-        Map::print();*/
-
-        //timer.update().print();
-        //printf("Score: %d\n", score);
-
-        //cout<<"\n"<<s_AllocCount<<" allocations";
     }
 
     system("cls");
