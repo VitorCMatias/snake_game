@@ -40,8 +40,9 @@ int main()
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
-        Sleep(difficulty);
         timer.start();
+        Sleep(difficulty);
+        
 
         if (_kbhit())
             key_pressed = toupper(_getch());
