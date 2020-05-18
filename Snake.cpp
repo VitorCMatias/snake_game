@@ -1,6 +1,5 @@
 #include "header.h"
-int Head::x;
-int Head::y;
+
 Head::Head()
 {
     this->head_position = find_position();
@@ -47,8 +46,8 @@ void Head::calculate_next_coord(char key_pressed)
 bool Head::detect_wall_colision()
 {
     bool colision;
-    gotoxy(Head::x, Head::y);
-    if (get_cursor_char() == WALL)
+    System::gotoxy(x, y);
+    if (System::get_cursor_char() == WALL)
         colision = true;
     else
         colision = false;
@@ -58,8 +57,8 @@ bool Head::detect_wall_colision()
 bool Head::detect_tail_colision()
 {
     bool colision;
-    gotoxy(Head::x, Head::y);
-    if (get_cursor_char() == TAIL_NODE)
+    System::gotoxy(x, y);
+    if (System::get_cursor_char() == TAIL_NODE)
         colision = true;
     else
         colision = false;
@@ -73,13 +72,13 @@ bool Head::internal_get_colision()
 
 void Head::internal_set_coord()
 {
-    Head::x = set_x();
-    Head::y = set_y();
+    this->x = System::set_x(head_position);
+    this->y = System::set_y(head_position);
 }
 
 void Head::internal_print()
 {
-    gotoxy(Head::x, Head::y);
+    System::gotoxy(x, y);
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 114);
     cout << HEAD;
 }
@@ -87,7 +86,7 @@ void Head::internal_print()
 void Head::internal_move(char key_pressed)
 {
     this->head_last_position = head_position;
-    gotoxy(Head::x, Head::y);
+    System::gotoxy(x, y);
     cout << ' ';
     calculate_next_coord(key_pressed);
     this->wall_shock = detect_wall_colision();
@@ -110,7 +109,7 @@ void Tail::update_position()
 {
     int head_last_position = Head::get_last_position();
 
-    if (this->tail_list.size() == 1)
+    if (tail_list.size() == 1)
     {
         this->tail_list.push_front(head_last_position);
     }
@@ -134,26 +133,25 @@ void Tail::internal_draw()
 
     if (this->tail_list.size() == 1)
     {
-        go_to_console_position(tail_list.front());
+        System::go_to_console_position(tail_list.front());
         cout << TAIL_NODE;
-        go_to_console_position(tail_list.back());
+        System::go_to_console_position(tail_list.back());
         cout << ' ';
     }
     else
     {
         for (int node : this->tail_list)
         {
-            go_to_console_position(node);
+            System::go_to_console_position(node);
             cout << TAIL_NODE;
         }
-        go_to_console_position(tail_list.back());
+        System::go_to_console_position(tail_list.back());
         cout << ' ';
     }
 }
 
 void Tail::internal_move()
 {
-    const int map_width = Map::get_width();
     update_position();
     if (this->tail_list.size() > 0)
     {
@@ -161,12 +159,3 @@ void Tail::internal_move()
     }
 }
 
-int set_y()
-{
-    //2 = upper and lower wall
-    return Head::get_position() / Map::get_width();
-}
-int set_x()
-{
-    return Head::get_position() % Map::get_width();
-}

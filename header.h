@@ -23,13 +23,38 @@
 
 using namespace std;
 
-struct System
+class System
 {
-    System(/* args */);
-    int generate_ramdom_number();
-    string get_file_content(const string path);
-    void show_consol_cursor(bool showFlag);
-    ~System();
+public:
+    System(const System &) = delete;
+    static System &get_instance()
+    {
+        static System instance;
+        return instance;
+    }
+
+    static int generate_ramdom_number() { return get_instance().internal_generate_ramdom_number(); }
+    static auto show_consol_cursor() { return get_instance().internal_hide_consol_cursor(); }
+    static string get_file_content(const string path) { return get_instance().internal_get_file_content(path); }
+    static int set_x(int one_dimension_position) { return get_instance().internal_set_x(one_dimension_position); }
+    static int set_y(int one_dimension_position) { return get_instance().internal_set_y(one_dimension_position); }
+    static void gotoxy(short x, short y){ return get_instance().internal_gotoxy(x,y); }
+    static void go_to_console_position(int one_dimension_position){ return get_instance().internal_go_to_console_position(one_dimension_position); }
+    static COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi){ return get_instance().internal_getxy(csbi); }
+    static char get_cursor_char(){ return get_instance().internal_get_cursor_char(); }
+
+private:
+    System() {}
+    int internal_generate_ramdom_number();
+    void internal_hide_consol_cursor();
+    string internal_get_file_content(const string path);
+    int internal_set_y(int one_dimension_position);
+    int internal_set_x(int one_dimension_position);
+
+    void internal_gotoxy(short x, short y);
+    void internal_go_to_console_position(int one_dimension_position);
+    COORD internal_getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi);
+    char internal_get_cursor_char();
 };
 
 class Timer
@@ -50,27 +75,6 @@ public:
     Timer print();
     Timer();
 };
-
-/*
-///Singleton
-class Ramdom
-{
-public:
-    Ramdom(const Ramdom &) = delete;
-    static Ramdom &get_instance()
-    {
-        static Ramdom instance;
-        return instance;
-    }
-
-    static float Float() { return get_instance().IFloat(); }
-
-private:
-    Ramdom() {}
-    float IFloat() { return m_q; }
-    float m_q = 2.0;
-};
-*/
 
 class Map
 {
@@ -110,8 +114,8 @@ public:
 class Head
 {
 private:
-    static int x;
-    static int y;
+    int x;
+    int y;
     int head_position;
     int head_last_position;
     bool wall_shock;
@@ -205,15 +209,7 @@ public:
     //void print_coord() { cout << "F_x:" << x << "f_y: " << y << '\n' << "f_p: " << fruit_position << '\n'; }
 
 private:
-    int set_y();
-    int set_x();
     void generate_position();
 };
 
 void print_score(int map_height, int score, int lives);
-void gotoxy(short x, short y);
-void go_to_console_position(int one_dimension_position);
-COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi);
-char get_cursor_char();
-int set_y();
-int set_x();

@@ -8,7 +8,7 @@ static uint32_t s_AllocCount = 0;
 void *operator new(size_t size)
 {
     s_AllocCount++;
-    gotoxy(0, Map::get_height() + 3);
+    System::gotoxy(0, Map::get_height() + 3);
     cout << "\nAlocating " << size << "bytes\n";
 
     return malloc(size);
@@ -17,18 +17,17 @@ void *operator new(size_t size)
 int main()
 {
     Timer timer;
-    System sys;
 
-    Map::canvas = sys.get_file_content("Map.txt");
+    Map::canvas = System::get_file_content("Map.txt");
     Head::set_coord();
 
     Fruit fruit;
     int lives = 1;
     int score = 0;
-    int difficulty = 90;
+    int difficulty = 100;
     char key_pressed = MOVE_UP;
 
-    sys.show_consol_cursor(false);
+    System::show_consol_cursor();
     system("cls");
     Map::print();
     fruit.draw();
@@ -54,7 +53,6 @@ int main()
             Head::print();
             Tail::move();
     
-
         if (Head::get_coord() == fruit.get_coord())
         {
             Tail::increase_size();
@@ -63,12 +61,11 @@ int main()
             score += 10;
         }
 
-        gotoxy(0, Map::get_height() + 10);
+        System::gotoxy(0, Map::get_height() + 10);
         printf("Score: %d\n", score);
         timer.update().print();
 
     }
-
     system("cls");
     cout << s_AllocCount << " allocations\n";
     return 0;
