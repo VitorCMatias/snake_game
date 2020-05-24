@@ -221,3 +221,4 @@ private:
 
 void print_score(int map_height, int score, int lives);
 void print_colour_scheme();
+void set_console_size();
