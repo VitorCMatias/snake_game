@@ -1,4 +1,4 @@
-#include "header.h"
+#include "Header.hpp"
 
 //g++ -O2 -std=c++17 header.h Source.cpp Main.cpp  -o m
 //g++ -std=c++17 header.h Snake.cpp Source.cpp Main.cpp -o m
