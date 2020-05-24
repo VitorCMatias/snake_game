@@ -32,11 +32,7 @@ int main()
     Map::print();
     fruit.draw();
 
-    /*
-    char str[11];
-    sprintf(str,"MODE %d, %d", Map::get_width(), Map::get_height() + 5);
-    system(str);
-    */
+    //set_console_size();
 
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
@@ -51,7 +47,7 @@ int main()
             lives--;
         else
             Head::print();
-            Tail::move();
+        Tail::move();
 
         if (Head::get_coord() == fruit.get_coord())
         {
@@ -64,12 +60,8 @@ int main()
         System::gotoxy(0, Map::get_height() + 10);
         printf("Score: %d\n", score);
         timer.update().print();
-
     }
     system("cls");
     cout << s_AllocCount << " allocations\n";
-    print_colour_scheme();
     return 0;
 }
-
-
