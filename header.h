@@ -12,11 +12,18 @@
 #define HEAD '0'
 #define TAIL_NODE 'o'
 #define FRUIT '*'
+#define APPLE '@'
 #define WALL '#'
 #define MOVE_UP 'W'
 #define MOVE_LEFT 'A'
 #define MOVE_RIGHT 'D'
 #define MOVE_DOWN 'S'
+
+#define GREEN_CHAR "\033[92m"
+#define YELLOW_CHAR "\033[33m"
+#define GRAY_CHAR "\033[90m"
+#define RED_CHAR "\033[31m"
+#define RESET_COLOR_SCHEME "\033[m"
 
 #define HEIGHT
 #define WIDTH
@@ -38,10 +45,10 @@ public:
     static string get_file_content(const string path) { return get_instance().internal_get_file_content(path); }
     static int set_x(int one_dimension_position) { return get_instance().internal_set_x(one_dimension_position); }
     static int set_y(int one_dimension_position) { return get_instance().internal_set_y(one_dimension_position); }
-    static void gotoxy(short x, short y){ return get_instance().internal_gotoxy(x,y); }
-    static void go_to_console_position(int one_dimension_position){ return get_instance().internal_go_to_console_position(one_dimension_position); }
-    static COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi){ return get_instance().internal_getxy(csbi); }
-    static char get_cursor_char(){ return get_instance().internal_get_cursor_char(); }
+    static void gotoxy(short x, short y) { return get_instance().internal_gotoxy(x, y); }
+    static void go_to_console_position(int one_dimension_position) { return get_instance().internal_go_to_console_position(one_dimension_position); }
+    static COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi) { return get_instance().internal_getxy(csbi); }
+    static char get_cursor_char() { return get_instance().internal_get_cursor_char(); }
 
 private:
     System() {}
@@ -213,3 +220,4 @@ private:
 };
 
 void print_score(int map_height, int score, int lives);
+void print_colour_scheme();

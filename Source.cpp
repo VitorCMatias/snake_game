@@ -129,8 +129,9 @@ void Map::internal_print()
 {
     System::gotoxy(0, 0);
     
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 120);
-    cout << Map::canvas << '\n';
+    //SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 120);
+    //cout <<"\033[40;64m"<< Map::canvas <<"\033[0m"<<'\n';
+    cout << GRAY_CHAR << Map::canvas << RESET_COLOR_SCHEME;
     
     //cout<<"\033[3;100;30m"<< Map::canvas<<"\033[0m\n";
 }
@@ -179,8 +180,9 @@ void Fruit::generate_position()
 void Fruit::draw()
 {
     System::gotoxy(x, y);
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126 | FOREGROUND_INTENSITY);
-    cout << FRUIT;
+    //SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 126 | FOREGROUND_INTENSITY);
+    cout << YELLOW_CHAR << FRUIT << RESET_COLOR_SCHEME;
+    
 }
 
 tuple<int, int> Fruit::get_coord()
@@ -192,4 +194,26 @@ void Fruit::generate()
 {
     generate_position();
     draw();
+}
+
+
+
+
+void print_colour_scheme()
+{
+    int i, j, n;
+
+    for (i = 0; i < 11; i++)
+    {
+        for (j = 0; j < 10; j++)
+        {
+            n = 10 * i + j;
+            if (n > 108)
+                break;
+            printf("\033[%dm %3d\033[m", n, n);
+        }
+        printf("\n");
+    }
+
+
 }
