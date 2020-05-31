@@ -59,8 +59,8 @@ int main()
             fruit.generate();
             Beep(1500, 80);
         }
-        //else
-        //Beep(200, 80);
+        else
+            Beep(200, 80);
 
         System::gotoxy(0, Map::get_height() + 1);
         printf("Score: %d\n", score);
