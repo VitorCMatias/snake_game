@@ -237,3 +237,74 @@ void test_sound()
     //cout << s_AllocCount << " allocations\n";
     //220Hz good for menu
 }
+
+void print_information(int map_height, int map_width, int lives, int score, float timer)
+{
+    timer = timer / 1000.0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        System::gotoxy(1, map_height + i);
+        for (int j = 1; j < map_width - 1; j++)
+        {
+            if (i != 0 && i != 1)
+            {
+                printf("#");
+            }
+            else
+            {
+                System::gotoxy(1, map_height + i);
+                printf("#");
+                System::gotoxy(map_width - 2, map_height + i);
+                printf("#");
+            }
+        }
+        printf("\n");
+    }
+
+    System::gotoxy(4, map_height);
+    printf("LIVES");
+    System::gotoxy(6, map_height + 1);
+    printf("%d", lives);
+
+    System::gotoxy(24, map_height);
+    printf("SCORE");
+
+    if (score < 100)
+        System::gotoxy(26, map_height + 1);
+    else
+        System::gotoxy(26 - (calculate_digits(score) - 3), map_height + 1);
+
+    printf("%d", score);
+
+    System::gotoxy(map_width - 8, map_height);
+    printf("TIME");
+    System::gotoxy(map_width - 8, map_height + 1);
+    if (timer < 100.0)
+        printf("%0.1f", timer);
+    else
+        printf("%d", int(timer));
+}
+
+void show_consol_cursor(bool showFlag)
+{
+    HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_CURSOR_INFO cursorInfo;
+
+    GetConsoleCursorInfo(out, &cursorInfo);
+    cursorInfo.bVisible = showFlag; // set the cursor visibility
+    SetConsoleCursorInfo(out, &cursorInfo);
+}
+
+int calculate_digits(int val)
+{
+    int i = 0;
+    while (val)
+    {
+        val = val / 10;
+        i++;
+    }
+
+    return i;
+}

@@ -15,7 +15,7 @@ void *operator new(size_t size)
 }
 
 int main()
-{
+{   
     Timer timer;
 
     Map::canvas = System::get_file_content("Map.txt");

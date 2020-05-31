@@ -226,3 +226,5 @@ void set_console_size();
 void test_sound();
 void increase_points(Fruit &fruit, int &score);
 void updade_score(Fruit &fruit, int &score);
+int calculate_digits(int val);
+void print_information(int map_height, int map_width, int lives, int score, float timer);
