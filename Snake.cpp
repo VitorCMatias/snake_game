@@ -78,8 +78,10 @@ void Head::internal_set_coord()
 
 void Head::internal_print()
 {
+    
     System::gotoxy(x, y);
     cout << GREEN_CHAR << HEAD << RESET_COLOR_SCHEME;
+    
 }
 
 void Head::internal_move(char key_pressed)

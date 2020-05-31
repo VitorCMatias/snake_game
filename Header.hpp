@@ -6,8 +6,9 @@
 #include <chrono>
 #include <tuple>
 #include <list>
-#include <thread>
+#include <thread>  
 #include <stdlib.h>
+
 
 #define HEAD '0'
 #define TAIL_NODE 'o'
@@ -222,3 +223,6 @@ private:
 void print_score(int map_height, int score, int lives);
 void print_colour_scheme();
 void set_console_size();
+void test_sound();
+void increase_points(Fruit &fruit, int &score);
+void updade_score(Fruit &fruit, int &score);

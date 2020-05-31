@@ -189,6 +189,12 @@ void Fruit::generate()
     draw();
 }
 
+
+
+
+
+
+
 void print_colour_scheme()
 {
     int i, j, n;
@@ -212,4 +218,22 @@ void set_console_size()
     char str[11];
     sprintf(str, "MODE %d, %d", Map::get_width(), Map::get_height() + 5);
     system(str);
+}
+
+void test_sound()
+{
+    int f, t;
+    while (!GetAsyncKeyState('Q'))
+    {
+        if (GetAsyncKeyState('V'))
+        {
+            fflush(stdin);
+            cin >> f;
+        }
+        if (GetAsyncKeyState('P'))
+            Beep(f, 100);
+    }
+    //532Hz, 500ms
+    //cout << s_AllocCount << " allocations\n";
+    //220Hz good for menu
 }

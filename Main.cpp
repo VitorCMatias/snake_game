@@ -24,7 +24,7 @@ int main()
     Fruit fruit;
     int lives = 1;
     int score = 0;
-    int difficulty = 130;
+    int difficulty = 100;
     char key_pressed = MOVE_UP;
 
     System::show_consol_cursor();
@@ -46,22 +46,27 @@ int main()
         if (Head::get_colision())
             lives--;
         else
+        {
             Head::print();
-        Tail::move();
+            Tail::move();
+        }
 
         if (Head::get_coord() == fruit.get_coord())
         {
             Tail::increase_size();
             Tail::move();
-            fruit.generate();
             score += 10;
+            fruit.generate();
+            Beep(1500, 80);
         }
+        //else
+        //Beep(200, 80);
 
-        System::gotoxy(0, Map::get_height() + 10);
+        System::gotoxy(0, Map::get_height() + 1);
         printf("Score: %d\n", score);
         timer.update().print();
     }
     system("cls");
-    cout << s_AllocCount << " allocations\n";
+    //test_sound();
     return 0;
 }
