@@ -12,6 +12,8 @@ This project is a version of the classical snake game arcade that I developed to
 
 I've also used the Singleton design pattern, to have only a single instance of a class. And some native Windows features, to change text and console colours or some DOS commands. 
 
+Here we have an image of the game running:
+![Gameplay image of the game](https://github.com/VitorCMatias/snake_game/blob/readme_images/Screenshots/game%20play.png)
 
 
 ## Libraries
