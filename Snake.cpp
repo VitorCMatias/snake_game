@@ -9,7 +9,11 @@ Head::Head()
 
 int Head::find_position()
 {
-    return Map::canvas.find(HEAD);
+    int head_position = Map::canvas.find(HEAD);
+
+    Map::canvas.replace(head_position, 1, " "); //Paramters: Position, Size, Content
+
+    return head_position;
 }
 
 int Head::internal_get_last_position()
@@ -78,10 +82,9 @@ void Head::internal_set_coord()
 
 void Head::internal_print()
 {
-    
+
     System::gotoxy(x, y);
     cout << GREEN_CHAR << HEAD << RESET_COLOR_SCHEME;
-    
 }
 
 void Head::internal_move(char key_pressed)
@@ -158,4 +161,3 @@ void Tail::internal_move()
         internal_draw();
     }
 }
-

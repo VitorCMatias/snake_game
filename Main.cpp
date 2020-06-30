@@ -3,19 +3,11 @@
 //g++ -O2 -std=c++17 header.h Source.cpp Main.cpp  -o m
 //g++ -std=c++17 header.h Snake.cpp Source.cpp Main.cpp -o m
 
-static uint32_t s_AllocCount = 0;
-
-void *operator new(size_t size)
-{
-    s_AllocCount++;
-    System::gotoxy(0, Map::get_height() + 3);
-    cout << "\nAlocating " << size << "bytes\n";
-
-    return malloc(size);
-}
-
 int main()
-{   
+{
+    //System::welcome_screen();
+    
+    
     Timer timer;
 
     Map::canvas = System::get_file_content("Map.txt");
@@ -24,8 +16,13 @@ int main()
     Fruit fruit;
     int lives = 1;
     int score = 0;
-    int difficulty = 100;
+    int difficulty = 0;
     char key_pressed = MOVE_UP;
+    bool quit_game = false;
+
+    
+
+
 
     System::show_consol_cursor();
     system("cls");
@@ -44,7 +41,9 @@ int main()
         Head::move(key_pressed);
 
         if (Head::get_colision())
+        {
             lives--;
+        }
         else
         {
             Head::print();
@@ -57,16 +56,13 @@ int main()
             Tail::move();
             score += 10;
             fruit.generate();
-            Beep(1500, 80);
         }
-        else
-            Beep(200, 80);
 
-        System::gotoxy(0, Map::get_height() + 1);
-        printf("Score: %d\n", score);
-        timer.update().print();
+        print_information(lives, score, timer);
     }
+    System::update_map_to_print(fruit.get_position());
+    System::write_file();
+    System::gotoxy(0, Map::get_height() + 10);
     system("cls");
-    //test_sound();
     return 0;
 }

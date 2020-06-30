@@ -6,9 +6,7 @@
 #include <chrono>
 #include <tuple>
 #include <list>
-#include <thread>  
 #include <stdlib.h>
-
 
 #define HEAD '0'
 #define TAIL_NODE 'o'
@@ -24,10 +22,8 @@
 #define YELLOW_CHAR "\033[33m"
 #define GRAY_CHAR "\033[90m"
 #define RED_CHAR "\033[31m"
+#define MENU_SELECTOR "\033[100m"
 #define RESET_COLOR_SCHEME "\033[m"
-
-#define HEIGHT
-#define WIDTH
 
 using namespace std;
 
@@ -50,6 +46,10 @@ public:
     static void go_to_console_position(int one_dimension_position) { return get_instance().internal_go_to_console_position(one_dimension_position); }
     static COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi) { return get_instance().internal_getxy(csbi); }
     static char get_cursor_char() { return get_instance().internal_get_cursor_char(); }
+    static auto welcome_screen() { return get_instance().internal_welcome_screen(); }
+    static auto write_file() { return get_instance().internal_write_file(); }
+    static int convert_coord_to_one_dimendion(const int x, const int y) { return get_instance().internal_convert_coord_to_one_dimendion(x, y); }
+    static auto update_map_to_print(int fruit_position) { return get_instance().internal_update_map_to_print(fruit_position); }
 
 private:
     System() {}
@@ -63,6 +63,11 @@ private:
     void internal_go_to_console_position(int one_dimension_position);
     COORD internal_getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi);
     char internal_get_cursor_char();
+
+    void internal_welcome_screen();
+    void internal_write_file();
+    int internal_convert_coord_to_one_dimendion(const int x, const int y);
+    void internal_update_map_to_print(int fruit_position);
 };
 
 class Timer
@@ -114,11 +119,6 @@ private:
     void internal_print();
 };
 
-class Snake
-{
-public:
-};
-
 class Head
 {
 private:
@@ -145,12 +145,6 @@ public:
     static auto set_coord() { return get_instance().internal_set_coord(); }
     static auto get_coord() { return get_instance().internal_get_coord(); }
 
-    /*
-    static auto print_coord() { return get_instance().internal_print_coord(); }
-    static int get_x() { return get_instance().internal_get_x(); }
-    static int get_y() { return get_instance().internal_get_y(); }
-    */
-
 private:
     Head();
     void internal_print();
@@ -166,12 +160,6 @@ private:
     int find_position();
     bool detect_wall_colision();
     bool detect_tail_colision();
-
-    /*
-    int internal_get_x() { return x; }
-    int internal_get_y() { return y; }
-    void internal_print_coord() { cout << "H_x:" << x << "H_y: " << y << '\n'; }
-    */
 };
 
 class Tail
@@ -189,6 +177,7 @@ public:
     static auto increase_size() { return get_instance().internal_increase_size(); }
     static auto draw() { return get_instance().internal_draw(); }
     static auto move() { return get_instance().internal_move(); }
+    static list<int> get_tail() { return get_instance().internal_get_tail(); }
 
 private:
     Tail() {}
@@ -196,6 +185,7 @@ private:
     void internal_increase_size();
     void internal_draw();
     void internal_move();
+    list<int> internal_get_tail() { return tail_list; }
 };
 
 class Fruit
@@ -214,7 +204,7 @@ public:
     int get_position();
     tuple<int, int> get_coord();
     void draw();
-    //void print_coord() { cout << "F_x:" << x << "f_y: " << y << '\n' << "f_p: " << fruit_position << '\n'; }
+    int get_fruit_position() { return fruit_position; }
 
 private:
     void generate_position();
@@ -227,4 +217,6 @@ void test_sound();
 void increase_points(Fruit &fruit, int &score);
 void updade_score(Fruit &fruit, int &score);
 int calculate_digits(int val);
-void print_information(int map_height, int map_width, int lives, int score, float timer);
+void print_information(int lives, int score, Timer &timer);
+void imprimir_selecao_menu(char choice);
+void weite_file();
