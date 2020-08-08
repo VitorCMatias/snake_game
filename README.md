@@ -14,7 +14,10 @@ I've also used the Singleton design pattern, to have only a single instance of a
 
 Here we have an image of the game running:
 
-![Gameplay image of the game](https://github.com/VitorCMatias/snake_game/blob/readme_images/Screenshots/game%20play.png)
+<p align="center">
+   <img width="460" height="300" src= https:https://github.com/VitorCMatias/snake_game/blob/readme_images/Screenshots/game%20play.png>
+</p>
+
 
 
 ## Libraries
