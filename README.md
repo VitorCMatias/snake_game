@@ -15,7 +15,7 @@ I've also used the Singleton design pattern, to have only a single instance of a
 Here we have an image of the game running:
 
 <p align="center">
-   <img width="460" height="300" src= https:https://github.com/VitorCMatias/snake_game/blob/readme_images/Screenshots/game%20play.png>
+   <img width="460" height="300" src= "https:https://github.com/VitorCMatias/snake_game/blob/readme_images/Screenshots/game%20play.png">
 </p>
 
 
