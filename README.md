@@ -2,7 +2,7 @@
 
 ## Table of Contents
 * [Introduction](#Introduction)
-* [Libraries](#Libraries)
+* [Libraries](#Libraries-and-tools)
 * [Colours](#Colours)
 * [Compilation](#Compilation)
 * [Observations](#Observations)
@@ -20,7 +20,7 @@ Here we have an image of the game running:
 
 
 
-## Libraries
+## Libraries and tools
 - STL
 - [Conio.h](https://bit.ly/2yTfPUe)
 
