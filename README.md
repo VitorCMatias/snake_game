@@ -2,7 +2,7 @@
 
 ## Table of Contents
 * [Introduction](#Introduction)
-* [Libraries](#Libraries-and-tools)
+* [Libraries and tools](#Libraries-and-tools)
 * [Colours](#Colours)
 * [Compilation](#Compilation)
 * [Observations](#Observations)
