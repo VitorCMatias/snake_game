@@ -418,6 +418,4 @@ void System::internal_update_map_to_print(int fruit_position){
     }
 
     Map::canvas.replace(fruit_position, 1, "*");
-
-    
 }
