@@ -4,26 +4,12 @@
 #include <conio.h>
 #include <random>
 #include <chrono>
-#include <tuple>
 #include <list>
 #include <stdlib.h>
 
-#define HEAD '0'
-#define TAIL_NODE 'o'
-#define FRUIT '*'
-#define APPLE '@'
-#define WALL '#'
-#define MOVE_UP 'W'
-#define MOVE_LEFT 'A'
-#define MOVE_RIGHT 'D'
-#define MOVE_DOWN 'S'
+#include "Symbols.hpp"
+#include "Fruit.hpp"
 
-#define GREEN_CHAR "\033[92m"
-#define YELLOW_CHAR "\033[33m"
-#define GRAY_CHAR "\033[90m"
-#define RED_CHAR "\033[31m"
-#define MENU_SELECTOR "\033[100m"
-#define RESET_COLOR_SCHEME "\033[m"
 
 using namespace std;
 
@@ -46,7 +32,7 @@ public:
     static void go_to_console_position(int one_dimension_position) { return get_instance().internal_go_to_console_position(one_dimension_position); }
     static COORD getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi) { return get_instance().internal_getxy(csbi); }
     static char get_cursor_char() { return get_instance().internal_get_cursor_char(); }
-    static auto welcome_screen() { return get_instance().internal_welcome_screen(); }
+    static auto welcome_screen(char &choice) { return get_instance().internal_welcome_screen(choice); }
     static auto write_file() { return get_instance().internal_write_file(); }
     static int convert_coord_to_one_dimendion(const int x, const int y) { return get_instance().internal_convert_coord_to_one_dimendion(x, y); }
     static auto update_map_to_print(int fruit_position) { return get_instance().internal_update_map_to_print(fruit_position); }
@@ -64,7 +50,7 @@ private:
     COORD internal_getxy(CONSOLE_SCREEN_BUFFER_INFO *csbi);
     char internal_get_cursor_char();
 
-    void internal_welcome_screen();
+    void internal_welcome_screen(char &choice);
     void internal_write_file();
     int internal_convert_coord_to_one_dimendion(const int x, const int y);
     void internal_update_map_to_print(int fruit_position);
@@ -188,27 +174,7 @@ private:
     list<int> internal_get_tail() { return tail_list; }
 };
 
-class Fruit
-{
-private:
-    int fruit_position;
-    int x;
-    int y;
 
-private:
-    int find_position();
-
-public:
-    Fruit();
-    void generate();
-    int get_position();
-    tuple<int, int> get_coord();
-    void draw();
-    int get_fruit_position() { return fruit_position; }
-
-private:
-    void generate_position();
-};
 
 void print_score(int map_height, int score, int lives);
 void print_colour_scheme();
@@ -218,5 +184,5 @@ void increase_points(Fruit &fruit, int &score);
 void updade_score(Fruit &fruit, int &score);
 int calculate_digits(int val);
 void print_information(int lives, int score, Timer &timer);
-void imprimir_selecao_menu(char choice);
+void imprimir_selecao_menu(char &choice);
 void weite_file();

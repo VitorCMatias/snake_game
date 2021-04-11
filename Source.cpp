@@ -139,59 +139,6 @@ void print_score(int map_height, int score, int lives)
     cout << "Lives: " << lives << endl;
 }
 
-Fruit::Fruit()
-{
-    this->fruit_position = find_position();
-    this->x = System::set_x(fruit_position);
-    this->y = System::set_y(fruit_position);
-}
-
-int Fruit::find_position()
-{
-    int fruit_position = Map::canvas.find(FRUIT);
-    Map::canvas.replace(fruit_position, 1, " ");
-
-    return fruit_position;
-}
-
-int Fruit::get_position()
-{
-    return fruit_position;
-}
-
-void Fruit::generate_position()
-{
-    int new_fruit_position;
-    int fruit_x_position;
-    int fruit_y_position;
-
-    do
-    {
-        new_fruit_position = System::generate_ramdom_number() % Map::canvas.length();
-    } while (Map::canvas.at(new_fruit_position) != ' ');
-
-    this->x = new_fruit_position % Map::get_width();
-    this->y = new_fruit_position / Map::get_width();
-    this->fruit_position = new_fruit_position;
-}
-
-void Fruit::draw()
-{
-    System::gotoxy(x, y);
-    cout << YELLOW_CHAR << FRUIT << RESET_COLOR_SCHEME;
-}
-
-tuple<int, int> Fruit::get_coord()
-{
-    return tie(x, y);
-}
-
-void Fruit::generate()
-{
-    generate_position();
-    draw();
-}
-
 void print_colour_scheme()
 {
     int i, j, n;
@@ -308,10 +255,10 @@ int calculate_digits(int val)
     return i;
 }
 
-void System::internal_welcome_screen()
+void System::internal_welcome_screen(char &choice)
 {
-    char choice;
-
+    
+    
     system("cls");
     cout << "Snake Game\n";
     cout << "by Vitor Matias\n\n";
@@ -330,7 +277,7 @@ void System::internal_welcome_screen()
     }
 }
 
-void imprimir_selecao_menu(char choice)
+void imprimir_selecao_menu(char &choice)
 {
     switch (choice)
     {
@@ -339,11 +286,12 @@ void imprimir_selecao_menu(char choice)
         system("cls");
         cout << "Snake Game\n";
         cout << "by Vitor Matias\n\n";
-        cout << MENU_SELECTOR << "1-New Game\n"
-             << RESET_COLOR_SCHEME;
+        cout << MENU_SELECTOR << "1-New Game\n"<< RESET_COLOR_SCHEME;
         cout << "2-Continue\n";
         cout << "3-Records\n";
         cout << "4-Quit\n";
+
+        if(_kbhit())
         break;
     }
     case '2':
@@ -352,8 +300,7 @@ void imprimir_selecao_menu(char choice)
         cout << "Snake Game\n";
         cout << "by Vitor Matias\n\n";
         cout << "1-New Game\n";
-        cout << MENU_SELECTOR << "2-Continue\n"
-             << RESET_COLOR_SCHEME;
+        cout << MENU_SELECTOR << "2-Continue\n"<< RESET_COLOR_SCHEME;
         cout << "3-Records\n";
         cout << "4-Quit\n";
         break;
@@ -365,8 +312,7 @@ void imprimir_selecao_menu(char choice)
         cout << "by Vitor Matias\n\n";
         cout << "1-New Game\n";
         cout << "2-Continue\n";
-        cout << MENU_SELECTOR << "3-Records\n"
-             << RESET_COLOR_SCHEME;
+        cout << MENU_SELECTOR << "3-Records\n"<< RESET_COLOR_SCHEME;
         cout << "4-Quit\n";
         break;
     }
@@ -378,8 +324,7 @@ void imprimir_selecao_menu(char choice)
         cout << "1-New Game\n";
         cout << "2-Continue\n";
         cout << "3-Records\n";
-        cout << MENU_SELECTOR << "4-Quit\n"
-             << RESET_COLOR_SCHEME;
+        cout << MENU_SELECTOR << "4-Quit\n"<< RESET_COLOR_SCHEME;
         break;
     }
     case '\n':

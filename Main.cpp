@@ -1,11 +1,14 @@
 #include "Header.hpp"
+//#include "Fruit.hpp"
 
 //g++ -O2 -std=c++17 header.h Source.cpp Main.cpp  -o m
 //g++ -std=c++17 header.h Snake.cpp Source.cpp Main.cpp -o m
+//g++ -std=c++17 Header.hpp Snake.cpp Source.cpp Main.cpp -o m
 
 int main()
 {
-    //System::welcome_screen();
+    char choice;
+    //System::welcome_screen(choice);
     
     
     Timer timer;
@@ -34,7 +37,7 @@ int main()
     while (!(GetAsyncKeyState('Q')) && lives > 0)
     {
         timer.start();
-        Sleep(difficulty);
+        //Sleep(difficulty);
 
         if (_kbhit())
             key_pressed = toupper(_getch());
